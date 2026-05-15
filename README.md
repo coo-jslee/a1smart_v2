@@ -1,11 +1,16 @@
+<p align="center">
+  <img src="branding/logo_v1.png" alt="A1Smart Logo" width="220" />
+</p>
+
 # A1-SMART v2.0
 
 **에이원스마트부동산중개법인** 부동산 정보 자동화 플랫폼 (Next.js 16 + Supabase 기반 재구축)
 
 - **도메인**: [aonesmart.biz](https://aonesmart.biz) (운영 예정)
 - **GitHub**: <https://github.com/junsooLee3814/a1-smart-v2>
-- **PRD**: `../09_a1_smart/docs/PRD_v2.md` (로컬) — A1-SMART v2.0 재구축 PRD
-- **기존 시스템(v1.7)**: 노션 6 DB + Python 11 모듈, `../09_a1_smart/`
+- **로컬 작업 폴더**: `C:\Users\juncp\00_claudecode\03_A1_Smart_v2\`
+- **PRD**: `C:\Users\juncp\00_claudework\09_a1_smart\docs\PRD_v2.md` — A1-SMART v2.0 재구축 PRD
+- **기존 시스템(v1.7)**: 노션 6 DB + Python 11 모듈, `C:\Users\juncp\00_claudework\09_a1_smart\`
 
 ---
 
@@ -87,6 +92,7 @@ npm start
 ```
 a1-smart-v2/
 ├── branding/                # 로고·사업자등록증 등 브랜드 자산
+│   ├── logo_v1.png
 │   └── business_registration.pdf
 ├── public/                  # 정적 자산 (Next.js)
 ├── src/
