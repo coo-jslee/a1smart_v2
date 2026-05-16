@@ -14,8 +14,20 @@ import { z } from "zod";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { headers } from "next/headers";
 
+// 원 단위 정수 파서 — "1,000,000원" / "100000" / 100000 모두 허용
+const moneyParser = z
+  .union([z.string(), z.number(), z.null()])
+  .optional()
+  .transform((v) => {
+    if (v == null || v === "") return null;
+    const n = typeof v === "string" ? Number(v.replace(/[^\d]/g, "")) : v;
+    return Number.isFinite(n) && n > 0 ? Math.round(n) : null;
+  });
+
 const ContactSchema = z.object({
-  inquiry_type: z.enum(["contact", "sell", "property"]).default("contact"),
+  inquiry_type: z
+    .enum(["contact", "sell", "property", "buy"])
+    .default("contact"),
   name: z.string().trim().min(1, "이름을 입력해 주세요.").max(60),
   phone: z.string().trim().max(40).optional().nullable(),
   email: z
@@ -33,14 +45,13 @@ const ContactSchema = z.object({
     .max(2000),
   property_type: z.string().trim().max(40).optional().nullable(),
   region: z.string().trim().max(120).optional().nullable(),
-  expected_price: z
-    .union([z.string(), z.number(), z.null()])
+  expected_price: moneyParser,
+  budget_min: moneyParser,
+  monthly_rent_max: moneyParser,
+  transaction_type: z
+    .enum(["매매", "전세", "월세"])
     .optional()
-    .transform((v) => {
-      if (v == null || v === "") return null;
-      const n = typeof v === "string" ? Number(v.replace(/[^\d]/g, "")) : v;
-      return Number.isFinite(n) && n > 0 ? Math.round(n) : null;
-    }),
+    .nullable(),
   area_m2: z
     .union([z.string(), z.number(), z.null()])
     .optional()
@@ -103,6 +114,24 @@ export async function submitInquiry(
     }
   }
 
+  // 6-b) 매수 의뢰면 transaction_type, property_type, region 필수
+  if (data.inquiry_type === "buy") {
+    if (!data.transaction_type) {
+      return {
+        ok: false,
+        error: "거래 형태(매매/전세/월세)를 선택해 주세요.",
+      };
+    }
+    if (!data.property_type || !data.region) {
+      return {
+        ok: false,
+        error: "매물 종류와 희망 지역을 입력해 주세요.",
+      };
+    }
+    // 월세 의뢰면 monthly_rent_max 권장 (필수까지는 X — 협의 가능)
+    // 예산 (expected_price 상한) 도 권장
+  }
+
   // 7) Supabase INSERT (anon OK, RLS 정책 일치)
   const supabase = await createSupabaseServerClient();
   const {
@@ -124,7 +153,10 @@ export async function submitInquiry(
       message: data.message,
       property_type: data.property_type ?? null,
       region: data.region ?? null,
+      transaction_type: data.transaction_type ?? null,
       expected_price: data.expected_price,
+      budget_min: data.budget_min,
+      monthly_rent_max: data.monthly_rent_max,
       area_m2: data.area_m2,
       asr_code: data.asr_code ?? null,
       consent_privacy: data.consent_privacy,

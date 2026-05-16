@@ -60,6 +60,12 @@ export async function PublicNavbar() {
             매물 보기
           </Link>
           <Link
+            href="/buy-request"
+            className="text-neutral-700 hover:text-neutral-900 transition-colors"
+          >
+            매수 의뢰
+          </Link>
+          <Link
             href="/intake"
             className="text-neutral-700 hover:text-neutral-900 transition-colors"
           >

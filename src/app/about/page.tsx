@@ -198,6 +198,11 @@ export default function AboutPage() {
                     문의하기
                   </Button>
                 </Link>
+                <Link href="/buy-request">
+                  <Button size="sm" variant="outline">
+                    매수 의뢰
+                  </Button>
+                </Link>
                 <Link href="/intake">
                   <Button size="sm">
                     매도 의뢰

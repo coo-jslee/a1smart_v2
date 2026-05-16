@@ -220,6 +220,7 @@ export type Database = {
           agent_id: string | null
           area_m2: number | null
           asr_code: string | null
+          budget_min: number | null
           consent_marketing: boolean
           consent_privacy: boolean
           created_at: string
@@ -228,6 +229,7 @@ export type Database = {
           id: number
           inquiry_type: string
           message: string
+          monthly_rent_max: number | null
           name: string
           phone: string | null
           property_type: string | null
@@ -236,6 +238,7 @@ export type Database = {
           reply_note: string | null
           status: string
           subject: string | null
+          transaction_type: string | null
           user_agent: string | null
           user_id: string | null
         }
@@ -243,6 +246,7 @@ export type Database = {
           agent_id?: string | null
           area_m2?: number | null
           asr_code?: string | null
+          budget_min?: number | null
           consent_marketing?: boolean
           consent_privacy?: boolean
           created_at?: string
@@ -251,6 +255,7 @@ export type Database = {
           id?: number
           inquiry_type: string
           message: string
+          monthly_rent_max?: number | null
           name: string
           phone?: string | null
           property_type?: string | null
@@ -259,6 +264,7 @@ export type Database = {
           reply_note?: string | null
           status?: string
           subject?: string | null
+          transaction_type?: string | null
           user_agent?: string | null
           user_id?: string | null
         }
@@ -266,6 +272,7 @@ export type Database = {
           agent_id?: string | null
           area_m2?: number | null
           asr_code?: string | null
+          budget_min?: number | null
           consent_marketing?: boolean
           consent_privacy?: boolean
           created_at?: string
@@ -274,6 +281,7 @@ export type Database = {
           id?: number
           inquiry_type?: string
           message?: string
+          monthly_rent_max?: number | null
           name?: string
           phone?: string | null
           property_type?: string | null
@@ -282,6 +290,7 @@ export type Database = {
           reply_note?: string | null
           status?: string
           subject?: string | null
+          transaction_type?: string | null
           user_agent?: string | null
           user_id?: string | null
         }

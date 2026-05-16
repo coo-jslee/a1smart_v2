@@ -29,6 +29,11 @@ export function PublicFooter() {
               </Link>
             </li>
             <li>
+              <Link href="/buy-request" className="hover:text-neutral-900">
+                매수 의뢰 (매매·전세·월세)
+              </Link>
+            </li>
+            <li>
               <Link href="/intake" className="hover:text-neutral-900">
                 매도 의뢰
               </Link>
