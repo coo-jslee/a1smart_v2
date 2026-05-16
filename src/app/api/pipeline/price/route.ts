@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
     const { data: prop, error: propErr } = await svc
       .from("properties")
       .select(
-        "asr_code, pnu, lawd_cd, property_type, building_name, exclusive_m2, supply_m2, floor_no, total_floors, built_year, is_distressed, risk_grade, risk_summary, mortgage_total",
+        "asr_code, pnu, lawd_cd, property_type, building_name, exclusive_m2, supply_m2, floor_no, total_floors, built_year, is_distressed, risk_grade, risk_summary, mortgage_total, external_evaluations",
       )
       .eq("asr_code", asrCode)
       .single();
@@ -138,6 +138,29 @@ export async function POST(req: NextRequest) {
     });
 
     // 7) 6개 평가방법 + 합의시세
+    // 7-a) 외부 평가값 변환 (관리자가 입력한 감정평가서/집품/KB 등)
+    type ExternalEval = {
+      id?: string;
+      source?: string;
+      value?: number;
+      weight?: number;
+      is_appraisal?: boolean;
+    };
+    const externalEvals = (prop.external_evaluations ?? []) as ExternalEval[];
+    const externalValues = externalEvals.map((e) => ({
+      value: Number(e.value ?? 0),
+      source: String(e.source ?? "외부"),
+      weight: Number(e.weight ?? 0.5),
+      is_appraisal: Boolean(e.is_appraisal),
+    }));
+    if (externalValues.length > 0) {
+      steps.push({
+        step: "외부 평가값 로드",
+        ok: true,
+        detail: `${externalValues.length}건 (${externalEvals.map((e) => e.source).join(", ")})`,
+      });
+    }
+
     const tEst = Date.now();
     const consensus = estimatePropertyPrice({
       target_area: Number(targetArea),
@@ -148,7 +171,7 @@ export async function POST(req: NextRequest) {
       distress_severity: distressSeverity,
       molit_trades: trades,
       auction_sales: [],
-      external_values: [],
+      external_values: externalValues,
       neighborhood_unit_price: neighborhoodUnit ?? undefined,
       neighborhood_name: `LAWD_CD ${prop.lawd_cd}`,
     });

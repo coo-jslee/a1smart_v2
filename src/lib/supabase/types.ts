@@ -369,6 +369,7 @@ export type Database = {
           created_at: string
           desired_close_by: string | null
           exclusive_m2: number | null
+          external_evaluations: Json
           floor_no: number | null
           gongsi_jiga: number | null
           image_paths: string[]
@@ -413,6 +414,7 @@ export type Database = {
           created_at?: string
           desired_close_by?: string | null
           exclusive_m2?: number | null
+          external_evaluations?: Json
           floor_no?: number | null
           gongsi_jiga?: number | null
           image_paths?: string[]
@@ -457,6 +459,7 @@ export type Database = {
           created_at?: string
           desired_close_by?: string | null
           exclusive_m2?: number | null
+          external_evaluations?: Json
           floor_no?: number | null
           gongsi_jiga?: number | null
           image_paths?: string[]

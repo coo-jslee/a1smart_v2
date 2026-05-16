@@ -127,8 +127,19 @@ function parseRtmsXml(xml: string, ep: Endpoint): TradeRecord[] {
     const deposit    = pickXmlAll(item, "deposit")[0]    ?? "";          // 전월세 보증금 (만원)
     const monthlyRent = pickXmlAll(item, "monthlyRent")[0] ?? "";        // 월세 (만원)
 
-    const area = parseFloat((pickXmlAll(item, "excluUseAr")[0] ?? "0").replace(/[,\s]/g, ""));
-    const floor = parseInt(pickXmlAll(item, "floor")[0] ?? "", 10);
+    // 면적 필드 (endpoint 마다 다름):
+    //   아파트/오피스텔/연립: excluUseAr (전용면적)
+    //   상가:                buildingAr (건물면적)
+    //   단독·다가구:          totalFloorAr (연면적)
+    const areaStr =
+      pickXmlAll(item, "excluUseAr")[0] ??
+      pickXmlAll(item, "buildingAr")[0] ??
+      pickXmlAll(item, "totalFloorAr")[0] ??
+      pickXmlAll(item, "houseAr")[0] ??
+      "0";
+    const area = parseFloat(areaStr.replace(/[,\s]/g, ""));
+    const floorStr = (pickXmlAll(item, "floor")[0] ?? "").trim();
+    const floor = floorStr ? parseInt(floorStr, 10) : NaN;
     const aptName   = pickXmlAll(item, "aptNm")[0]
                    ?? pickXmlAll(item, "offiNm")[0]
                    ?? pickXmlAll(item, "mhouseNm")[0]

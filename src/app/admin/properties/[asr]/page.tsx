@@ -9,6 +9,10 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { PriceRefreshButton } from "./price-refresh-client";
+import {
+  ExternalEvalsCard,
+  type ExternalEvaluation,
+} from "./external-evals-client";
 
 export const dynamic = "force-dynamic";
 
@@ -111,6 +115,25 @@ export default async function PropertyDetailPage({
         </CardHeader>
         <CardContent>
           <PriceRefreshButton asrCode={prop.asr_code} />
+        </CardContent>
+      </Card>
+
+      {/* 외부 평가값 (M4.1) */}
+      <Card>
+        <CardHeader>
+          <CardTitle>외부 평가값 (관리자 입력)</CardTitle>
+          <CardDescription>
+            감정평가서·집품·KB·중개사 직접 견적 등을 입력하면 시세 갱신 시
+            가중평균에 반영됩니다. 단독건물·특이매물 시세 보정용.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ExternalEvalsCard
+            asrCode={prop.asr_code}
+            initialEvals={
+              (prop.external_evaluations as ExternalEvaluation[] | null) ?? []
+            }
+          />
         </CardContent>
       </Card>
 
