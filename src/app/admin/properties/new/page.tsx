@@ -57,12 +57,22 @@ const INITIAL_IMAGES: ImageSlot[] = Array.from({ length: MAX_IMAGES }, () => ({
   status: "idle",
 }));
 
+type AnalyzeStep = { step: string; ok: boolean; detail?: string; ms?: number };
+
 export default function NewPropertyPage() {
   const [mode, setMode] = useState<"manual" | "auto">("manual");
   const [gongbu, setGongbu] =
     useState<Record<GongbuType, GongbuSlot>>(INITIAL_GONGBU);
   const [images, setImages] = useState<ImageSlot[]>(INITIAL_IMAGES);
   const [submitting, setSubmitting] = useState(false);
+  const [uploadDone, setUploadDone] = useState(false);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [analyzeSteps, setAnalyzeSteps] = useState<AnalyzeStep[]>([]);
+  const [analyzeResult, setAnalyzeResult] = useState<{
+    asrCode?: string;
+    pnu?: string;
+    error?: string;
+  } | null>(null);
 
   function updateGongbu(t: GongbuType, patch: Partial<GongbuSlot>) {
     setGongbu((prev) => ({ ...prev, [t]: { ...prev[t], ...patch } }));
@@ -143,14 +153,40 @@ export default function NewPropertyPage() {
         }
       }
 
-      toast.success(
-        "모든 파일 업로드 완료. (단계 4 분석 파이프라인은 M3에서 연결됩니다.)",
-      );
+      toast.success("업로드 완료! 아래 [분석 시작] 버튼을 눌러 단계 4 분석을 실행하세요.");
+      setUploadDone(true);
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
       toast.error("업로드 실패: " + msg);
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  async function handleAnalyze() {
+    setAnalyzing(true);
+    setAnalyzeSteps([]);
+    setAnalyzeResult(null);
+
+    try {
+      const res = await fetch("/api/pipeline/extract", { method: "POST" });
+      const json = await res.json();
+
+      if (json.steps) setAnalyzeSteps(json.steps as AnalyzeStep[]);
+
+      if (!res.ok) {
+        setAnalyzeResult({ error: json?.error ?? "분석 실패" });
+        toast.error("분석 실패: " + (json?.error ?? "Unknown"));
+      } else {
+        setAnalyzeResult({ asrCode: json.asrCode, pnu: json.pnu });
+        toast.success(`분석 완료! ASR ${json.asrCode}`);
+      }
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      setAnalyzeResult({ error: msg });
+      toast.error("네트워크 오류: " + msg);
+    } finally {
+      setAnalyzing(false);
     }
   }
 
@@ -295,19 +331,25 @@ export default function NewPropertyPage() {
 
       <Alert>
         <AlertDescription className="text-xs">
-          업로드 즉시 Supabase Storage 에 보관됩니다.
-          단계 4 (OCR + Claude LLM 분석) 자동 트리거는 M3 마일스톤에서 연결됩니다.
+          업로드 즉시 Supabase Storage 에 보관되고, 분석 시작 버튼을 누르면
+          단계 4 (pdf-parse → PII 마스킹 → Claude LLM 추출 → properties INSERT)가
+          자동 실행됩니다. 처리 시간 약 30~60초.
         </AlertDescription>
       </Alert>
 
       <div className="flex justify-end gap-3">
-        <Button variant="outline" disabled={submitting} onClick={() => location.reload()}>
+        <Button
+          variant="outline"
+          disabled={submitting || analyzing}
+          onClick={() => location.reload()}
+        >
           초기화
         </Button>
         <Button
           onClick={handleSubmit}
-          disabled={submitting || mode === "auto"}
+          disabled={submitting || analyzing || mode === "auto" || uploadDone}
           size="lg"
+          variant={uploadDone ? "outline" : "default"}
         >
           {submitting ? (
             <>
@@ -317,11 +359,75 @@ export default function NewPropertyPage() {
           ) : (
             <>
               <Upload className="h-4 w-4 mr-2" />
-              업로드 시작
+              {uploadDone ? "업로드 완료" : "업로드 시작"}
             </>
           )}
         </Button>
+        <Button
+          onClick={handleAnalyze}
+          disabled={analyzing || submitting}
+          size="lg"
+          title="현재 로그인 계정의 pending 업로드를 모두 분석합니다 (등기·토지·건축 PDF 3종 필요)"
+        >
+          {analyzing ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              분석 중…
+            </>
+          ) : (
+            <>🤖 분석 시작</>
+          )}
+        </Button>
       </div>
+
+      {/* 분석 진행 / 결과 */}
+      {(analyzeSteps.length > 0 || analyzeResult) && (
+        <Card>
+          <CardHeader>
+            <CardTitle>단계 4 분석 진행</CardTitle>
+            <CardDescription>
+              pdf-parse → PII 마스킹 → Claude → properties INSERT
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            {analyzeSteps.map((s, i) => (
+              <div key={i} className="flex items-start gap-2">
+                {s.ok ? (
+                  <CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                ) : (
+                  <XCircle className="h-4 w-4 text-red-600 mt-0.5 flex-shrink-0" />
+                )}
+                <div className="flex-1">
+                  <div className="font-medium">{s.step}</div>
+                  {s.detail && (
+                    <div className="text-xs text-neutral-500">{s.detail}</div>
+                  )}
+                </div>
+                {s.ms !== undefined && (
+                  <div className="text-xs text-neutral-400">{s.ms}ms</div>
+                )}
+              </div>
+            ))}
+            {analyzeResult?.asrCode && (
+              <Alert className="mt-4">
+                <AlertDescription>
+                  <div className="font-medium text-green-700">
+                    ✅ 분석 완료: {analyzeResult.asrCode}
+                  </div>
+                  <div className="text-xs text-neutral-500 mt-1">
+                    PNU {analyzeResult.pnu} · workflow_stage = 05_입력
+                  </div>
+                </AlertDescription>
+              </Alert>
+            )}
+            {analyzeResult?.error && (
+              <Alert variant="destructive" className="mt-4">
+                <AlertDescription>{analyzeResult.error}</AlertDescription>
+              </Alert>
+            )}
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
