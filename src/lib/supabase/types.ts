@@ -215,6 +215,86 @@ export type Database = {
           },
         ]
       }
+      inquiries: {
+        Row: {
+          agent_id: string | null
+          area_m2: number | null
+          asr_code: string | null
+          consent_marketing: boolean
+          consent_privacy: boolean
+          created_at: string
+          email: string | null
+          expected_price: number | null
+          id: number
+          inquiry_type: string
+          message: string
+          name: string
+          phone: string | null
+          property_type: string | null
+          region: string | null
+          replied_at: string | null
+          reply_note: string | null
+          status: string
+          subject: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          agent_id?: string | null
+          area_m2?: number | null
+          asr_code?: string | null
+          consent_marketing?: boolean
+          consent_privacy?: boolean
+          created_at?: string
+          email?: string | null
+          expected_price?: number | null
+          id?: number
+          inquiry_type: string
+          message: string
+          name: string
+          phone?: string | null
+          property_type?: string | null
+          region?: string | null
+          replied_at?: string | null
+          reply_note?: string | null
+          status?: string
+          subject?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          agent_id?: string | null
+          area_m2?: number | null
+          asr_code?: string | null
+          consent_marketing?: boolean
+          consent_privacy?: boolean
+          created_at?: string
+          email?: string | null
+          expected_price?: number | null
+          id?: number
+          inquiry_type?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          property_type?: string | null
+          region?: string | null
+          replied_at?: string | null
+          reply_note?: string | null
+          status?: string
+          subject?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inquiries_asr_code_fkey"
+            columns: ["asr_code"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["asr_code"]
+          },
+        ]
+      }
       gongbu_documents: {
         Row: {
           asr_code: string

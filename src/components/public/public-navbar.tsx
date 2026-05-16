@@ -59,6 +59,18 @@ export async function PublicNavbar() {
           >
             매물 보기
           </Link>
+          <Link
+            href="/intake"
+            className="text-neutral-700 hover:text-neutral-900 transition-colors"
+          >
+            매도 의뢰
+          </Link>
+          <Link
+            href="/about"
+            className="text-neutral-700 hover:text-neutral-900 transition-colors"
+          >
+            회사 소개
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">

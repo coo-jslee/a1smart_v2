@@ -1,11 +1,11 @@
 # A1-SMART v2.0 진행 상황
 
-> 마지막 작업: 2026-05-17 (M7 1차 완료. 공개 홈/매물 리스트/매물 상세 — 시드 매물 7건 확보 + 공개 페이지 풀스택 + 회원 외부용 보고서 다운로드)
+> 마지막 작업: 2026-05-17 (M7 후속 완료. /about /contact /intake /privacy /terms 5개 페이지 + inquiries 테이블 + 문의 폼 Server Actions)
 > 다음 작업 (택일):
->   ① **M8 도메인 연결 + 통합 QA** — aonesmart.biz 도메인 연결, SSL, 운영 모드 점검
->   ② **M7 후속 — 회사 소개/문의/매물 의뢰 페이지** — /about, /contact, /intake 3개 추가
->   ③ **매물 사진 추가 UI** — 매물 상세(admin)에서 image_paths 수동 업로드
->   ④ **M6 후속 (PDF 변환)** — LibreOffice headless 또는 Puppeteer 도입
+>   ① **호스팅 결정 후 Vercel/Cafe24 배포** (선택)
+>   ② **M6 후속 (PDF 변환)** — LibreOffice headless 또는 Puppeteer 도입
+>   ③ **admin inquiries 일람 페이지** — 들어온 문의·매도 의뢰 처리용 (~30분)
+>   ④ **매물 사진 추가 UI** — 매물 상세(admin)에서 image_paths 수동 업로드
 >   ⑤ **M4.2 공시지가 fallback** (단독건물 시세 보강)
 >   ⑥ **M5 노션 → Supabase 마이그레이션** (v1.7 데이터 이관)
 
@@ -23,8 +23,8 @@
 - [ ] **M5** 노션 → Supabase 마이그레이션
 - [x] **M6** 단계 7 분석보고서 — DOCX 자동 생성 + Storage 영구 저장 + 3열 이미지 행 + 딥블루 톤 + 풀폭 본문 + 재생성 자동 삭제 + 수동 삭제 (PDF는 후속)
 - [x] **M7 (1차)** 공개 홈 + 매물 리스트 + 매물 상세 (3페이지). 시드 매물 7건. 회원 외부용 보고서 다운로드.
-- [ ] **M7 후속** 회사 소개/문의/매물 의뢰 페이지 (선택)
-- [ ] **M8** 통합 QA·도메인 연결 (aonesmart.biz)
+- [x] **M7 (후속)** 회사 소개·문의·매도 의뢰 + 약관/개인정보 (5페이지) + inquiries 테이블 + 문의 Server Actions
+- [ ] **M8** 통합 QA·도메인 연결 (호스팅 계약 후)
 
 ---
 
@@ -218,13 +218,18 @@ claude
 
 ---
 
-## 🛠 신규 라우트 (M7 1차, 총 15개)
+## 🛠 신규 라우트 (M7 후속, 총 20개)
 
 ```
 ƒ /                              홈 (Hero + 최신 매물 6건)               ★ M7
 ○ /login, /signup                인증
 ƒ /properties                    공개 매물 리스트 + 필터 + 페이지네이션  ★ M7
 ƒ /properties/[asr]              공개 매물 상세 (로그인 회원만)           ★ M7
+ƒ /about                         회사 소개 + 사업자 정보                  ★ M7 후속
+ƒ /contact                       일반 문의 폼                              ★ M7 후속
+ƒ /intake                        매도 의뢰 폼                              ★ M7 후속
+ƒ /privacy                       개인정보처리방침 (초안)                   ★ M7 후속
+ƒ /terms                         이용약관 (초안)                            ★ M7 후속
 ƒ /admin/dashboard               관리자 대시보드
 ƒ /admin/properties/new          단계 1 자료수집
 ƒ /admin/properties/[asr]        매물 상세 + 시세 갱신 + 외부 평가 입력 + 분석보고서 생성/관리

@@ -29,6 +29,16 @@ export function PublicFooter() {
               </Link>
             </li>
             <li>
+              <Link href="/intake" className="hover:text-neutral-900">
+                매도 의뢰
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className="hover:text-neutral-900">
+                회사 소개
+              </Link>
+            </li>
+            <li>
               <Link href="/signup" className="hover:text-neutral-900">
                 회원가입 (보고서 다운로드)
               </Link>
