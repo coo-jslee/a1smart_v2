@@ -125,7 +125,7 @@ export async function extractFromPdf(
 
   const client = getClient();
   const resp = await client.messages.create({
-    model: "claude-opus-4-7",
+    model: "claude-sonnet-4-6",
     max_tokens: 8192,
     messages: [
       {
@@ -160,7 +160,7 @@ export async function extractWithClaude(
 
   const client = getClient();
   const resp = await client.messages.create({
-    model: "claude-opus-4-7",
+    model: "claude-sonnet-4-6",
     max_tokens: 4096,
     messages: [{ role: "user", content: prompt }],
   });

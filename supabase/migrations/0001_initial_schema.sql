@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS public.extractions (
   ocr_text          TEXT,                             -- 마스킹 완료된 텍스트
   extracted_json    JSONB NOT NULL,                   -- Claude 추출 결과
   confidence        INT CHECK (confidence BETWEEN 0 AND 100),
-  llm_model         TEXT DEFAULT 'claude-opus-4-7',
+  llm_model         TEXT DEFAULT 'claude-sonnet-4-6',
   prompt_version    TEXT,                             -- 프롬프트 버전 추적
   created_at        TIMESTAMPTZ NOT NULL DEFAULT now()
 );

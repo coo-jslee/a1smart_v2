@@ -238,7 +238,7 @@ export async function POST(req: NextRequest) {
         ocr_text: null, // PDF 직접 처리 모드: raw OCR 텍스트 미저장
         extracted_json: extractedJsonMap[t] as never,
         confidence: 92,
-        llm_model: "claude-opus-4-7",
+        llm_model: "claude-sonnet-4-6",
         prompt_version: "v2-pdf-direct",
       });
       if (exErr) throw new Error(`extractions INSERT 실패 (${t}): ${exErr.message}`);
