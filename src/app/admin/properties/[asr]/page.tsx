@@ -13,6 +13,7 @@ import {
   ExternalEvalsCard,
   type ExternalEvaluation,
 } from "./external-evals-client";
+import { ReportGenerateCard } from "./report-generate-client";
 
 export const dynamic = "force-dynamic";
 
@@ -133,6 +134,28 @@ export default async function PropertyDetailPage({
             initialEvals={
               (prop.external_evaluations as ExternalEvaluation[] | null) ?? []
             }
+          />
+        </CardContent>
+      </Card>
+
+      {/* 분석보고서 (M6) */}
+      <Card>
+        <CardHeader>
+          <CardTitle>분석보고서 (M6 — 단계 7)</CardTitle>
+          <CardDescription>
+            합의시세 + 권리분석 + 세무 추정 + 전문가 의견을 종합한 분석보고서를
+            DOCX로 생성합니다. Storage `reports` 버킷에 영구 저장되고
+            매물 첨부 목록에 기록됩니다. 외부용(투자자)·내부용(중개사) 선택 가능.
+            <br />
+            <span className="text-xs text-neutral-500">
+              ※ 재생성 시 같은 버전의 기존 파일은 자동 삭제됩니다. 다른 버전은 유지됩니다.
+            </span>
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ReportGenerateCard
+            asrCode={prop.asr_code}
+            initialAttachments={prop.attachment_paths ?? []}
           />
         </CardContent>
       </Card>
