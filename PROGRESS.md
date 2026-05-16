@@ -1,11 +1,13 @@
 # A1-SMART v2.0 진행 상황
 
-> 마지막 작업: 2026-05-17 (M6 완료. DOCX 자동 생성 + 3열 이미지 행 + 딥블루 톤 + 풀폭 본문 + 재생성 자동 삭제 + 수동 삭제 UI. ASR-11710-000001 실데이터 검증 완료)
+> 마지막 작업: 2026-05-17 (M7 1차 완료. 공개 홈/매물 리스트/매물 상세 — 시드 매물 7건 확보 + 공개 페이지 풀스택 + 회원 외부용 보고서 다운로드)
 > 다음 작업 (택일):
->   ① **M6 후속 (PDF 변환)** — LibreOffice headless 또는 Puppeteer 도입 (현재 DOCX만)
->   ② **매물 사진 추가 UI** — 매물 상세에서 image_paths 수동 업로드 (현재 단계 1 등록 시에만 채워짐)
->   ③ **M4.2 공시지가 fallback** (단독건물 시세 보강, B 옵션)
->   ④ **M5 노션 → Supabase 마이그레이션** (v1.7 데이터 이관, 검증용 매물 확보)
+>   ① **M8 도메인 연결 + 통합 QA** — aonesmart.biz 도메인 연결, SSL, 운영 모드 점검
+>   ② **M7 후속 — 회사 소개/문의/매물 의뢰 페이지** — /about, /contact, /intake 3개 추가
+>   ③ **매물 사진 추가 UI** — 매물 상세(admin)에서 image_paths 수동 업로드
+>   ④ **M6 후속 (PDF 변환)** — LibreOffice headless 또는 Puppeteer 도입
+>   ⑤ **M4.2 공시지가 fallback** (단독건물 시세 보강)
+>   ⑥ **M5 노션 → Supabase 마이그레이션** (v1.7 데이터 이관)
 
 ---
 
@@ -20,8 +22,9 @@
 - [ ] **M4.2** B: 공시지가 기반 토지 평가 + 건물 감가상각 fallback
 - [ ] **M5** 노션 → Supabase 마이그레이션
 - [x] **M6** 단계 7 분석보고서 — DOCX 자동 생성 + Storage 영구 저장 + 3열 이미지 행 + 딥블루 톤 + 풀폭 본문 + 재생성 자동 삭제 + 수동 삭제 (PDF는 후속)
-- [ ] **M7** 단계 7 홈페이지·대시보드 확장
-- [ ] **M8** 통합 QA·도메인 연결
+- [x] **M7 (1차)** 공개 홈 + 매물 리스트 + 매물 상세 (3페이지). 시드 매물 7건. 회원 외부용 보고서 다운로드.
+- [ ] **M7 후속** 회사 소개/문의/매물 의뢰 페이지 (선택)
+- [ ] **M8** 통합 QA·도메인 연결 (aonesmart.biz)
 
 ---
 
@@ -126,6 +129,56 @@ npm run dev
 # 각 보고서 행에서 [⬇ 다운로드] / [🗑 삭제] 버튼 동작
 ```
 
+### 시드 매물 7건 (홈페이지 M7 출시 전 더미 데이터)
+
+ASR-11710-000001 (송파 거여 단독상가)을 6번 복제 → 총 7건. PNU 부번 / 도로명 번지(+2씩) / 가격 ±10% / 면적 ±5% 자동 변형. 모두 `is_public=true`, `workflow_stage=완료`, 사진 6장 공유. `scripts/seed-clone-properties.ts` 로 재실행 가능.
+
+### M7 1차 결과 (공개 홈페이지 — 3페이지)
+
+**페이지 구성**:
+- `/` — Hero + 최신 공개 매물 6건 카드 그리드 + 강점 3박스 + 푸터
+- `/properties` — 매물 리스트, 필터(지역/유형/가격대/위험등급), 정렬(최신/가격↑/가격↓), 12건씩 페이지네이션
+- `/properties/[asr]` — 공개 매물 상세 (로그인 회원만, middleware 가드). 사진 갤러리 + KPI 4분할 + 기본정보·권리분석 + 합의시세 구성 + 분석보고서 다운로드 (외부용 한정)
+
+**접근 정책**:
+- `/`, `/properties` : 누구나 (anon)
+- `/properties/[asr]` : 로그인 필요 (member/admin) — middleware redirect to `/login?redirectedFrom=...`
+- 보고서 다운로드 (`/api/properties/[asr]/report-download`) :
+  - admin → 모든 보고서 (investor + full)
+  - member → 매물 `is_public=true` + 파일명 `investor_` prefix 인 경우만 (Storage RLS와 일치)
+
+**민감 정보 차단**:
+- 공개 상세에서 PNU·소유자 실명·1순위 채권자·내부 메모 노출 안 함
+- "1순위 채권자 실명·PNU 등 상세 권리관계는 분석보고서에서 확인하세요" 안내 문구
+
+**컴포넌트 재사용**:
+- `PublicNavbar` + `PublicFooter` : 3페이지 공유
+- `PropertyCard` : 홈 / 리스트 공유. 썸네일 + 배지 + 면적·층·준공 + 합의시세 + ㎡당
+- `PublicGallery` : 매물 상세 사진 갤러리 (메인 + 썸네일 가로 스크롤)
+- `ReportDownloadList` : 회원 외부용 보고서 다운로드
+
+**Storage public URL 헬퍼** (`src/lib/storage/public-url.ts`):
+- `publicStorageUrl(bucket, path)` — 공개 버킷 URL 조립
+- `firstPropertyImageUrl(image_paths)` — 카드 썸네일용
+- `propertyImageUrls(image_paths)` — 상세 갤러리용
+
+**검증 결과**:
+- ✅ TypeScript `tsc --noEmit` 0 에러
+- ✅ `next build` 성공 — 신규 2개 페이지 라우트 (`/properties`, `/properties/[asr]`) + 기존 `/` 갱신
+- ⏳ 실제 브라우저 검증 (필터·페이지네이션·로그인 가드·회원 보고서 다운로드): 사용자가 dev 서버에서 확인
+
+**검증 방법** (재현):
+```powershell
+# 비로그인 상태
+http://localhost:3000/                          # 홈, 매물 6건 표시
+http://localhost:3000/properties                # 리스트 7건
+http://localhost:3000/properties/ASR-11710-000001  # → 자동 redirect /login
+
+# 회원 로그인 후
+http://localhost:3000/properties/ASR-11710-000001  # 상세 접근 OK
+# 외부용 분석보고서 다운로드 가능 (관리자 페이지에서 생성한 investor_*.docx)
+```
+
 ---
 
 ## 🔁 내일 새벽 재개 방법
@@ -165,11 +218,13 @@ claude
 
 ---
 
-## 🛠 신규 라우트 (M6 최종, 총 13개)
+## 🛠 신규 라우트 (M7 1차, 총 15개)
 
 ```
-○ /                              홈
+ƒ /                              홈 (Hero + 최신 매물 6건)               ★ M7
 ○ /login, /signup                인증
+ƒ /properties                    공개 매물 리스트 + 필터 + 페이지네이션  ★ M7
+ƒ /properties/[asr]              공개 매물 상세 (로그인 회원만)           ★ M7
 ƒ /admin/dashboard               관리자 대시보드
 ƒ /admin/properties/new          단계 1 자료수집
 ƒ /admin/properties/[asr]        매물 상세 + 시세 갱신 + 외부 평가 입력 + 분석보고서 생성/관리
@@ -178,9 +233,9 @@ claude
 ƒ /api/pipeline/price            M4 단계 5 시세 평가
 ƒ /api/pipeline/report           M6 단계 7 분석보고서 생성 (DOCX + Storage + attachment_paths + auto-cleanup)
 ƒ /api/properties/[asr]/external-evals    M4.1 외부 평가 CRUD
-ƒ /api/properties/[asr]/report-download   M6 보고서 signed URL 발급 (1시간)
+ƒ /api/properties/[asr]/report-download   M6/M7 보고서 signed URL 발급 (admin: 모든 보고서, member: investor_ 만)
 ƒ /api/properties/[asr]/report-delete     M6 보고서 수동 삭제 (Storage + DB)
-ƒ Proxy (Middleware)             세션·경로 가드
+ƒ Proxy (Middleware)             세션·경로 가드 (admin/member/properties[asr] 로그인 요구)
 ```
 
 ---

@@ -40,9 +40,12 @@ export async function updateSession(request: NextRequest) {
   const isAuthPath = path.startsWith("/login") || path.startsWith("/signup");
   const isAdminPath = path.startsWith("/admin");
   const isMemberPath = path.startsWith("/member");
+  // 공개 매물 상세 페이지 — 로그인 회원만 접근 (리스트 /properties 는 공개)
+  const isPublicPropertyDetail =
+    /^\/properties\/[^/]+\/?$/.test(path) && path !== "/properties/";
 
   // (1) 비로그인 사용자가 보호된 경로에 접근하면 /login으로
-  if (!user && (isAdminPath || isMemberPath)) {
+  if (!user && (isAdminPath || isMemberPath || isPublicPropertyDetail)) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("redirectedFrom", path);
