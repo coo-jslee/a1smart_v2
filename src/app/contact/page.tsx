@@ -52,12 +52,12 @@ export default function ContactPage() {
                   <Mail className="h-4 w-4 text-blue-900 mt-0.5 flex-shrink-0" />
                   <div>
                     <div className="text-xs text-neutral-500">이메일</div>
-                    <div className="text-neutral-800">
-                      contact@aonesmart.biz
-                      <div className="text-xs text-neutral-400 mt-0.5">
-                        (도메인 연결 후 안내)
-                      </div>
-                    </div>
+                    <a
+                      href="mailto:coo@aonesmart.biz"
+                      className="text-neutral-800 hover:text-blue-900 hover:underline"
+                    >
+                      coo@aonesmart.biz
+                    </a>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">

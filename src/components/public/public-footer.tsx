@@ -37,6 +37,17 @@ export function PublicFooter() {
                 (등촌동, 엘크루 발산)
               </dd>
             </div>
+            <div className="flex gap-2">
+              <dt className="text-neutral-400 w-16 flex-shrink-0">이메일</dt>
+              <dd>
+                <a
+                  href="mailto:coo@aonesmart.biz"
+                  className="hover:text-neutral-900 hover:underline"
+                >
+                  coo@aonesmart.biz
+                </a>
+              </dd>
+            </div>
           </dl>
         </div>
         <div>
