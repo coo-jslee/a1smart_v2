@@ -11,12 +11,19 @@ import {
   Settings,
   LayoutDashboard,
   PlusCircle,
+  Inbox,
 } from "lucide-react";
 
 const NAV = [
   { href: "/admin/dashboard", label: "대시보드", icon: LayoutDashboard },
   { href: "/admin/properties", label: "매물", icon: Building2 },
   { href: "/admin/properties/new", label: "매물 등록", icon: PlusCircle },
+  {
+    href: "/admin/inquiries",
+    label: "고객 의뢰",
+    icon: Inbox,
+    badgeKind: "new-inquiries" as const,
+  },
   { href: "/admin/customers", label: "고객", icon: Users },
   { href: "/admin/errors", label: "오류 로그", icon: AlertTriangle },
   { href: "/admin/settings", label: "환경설정", icon: Settings },
@@ -44,6 +51,19 @@ export default async function AdminLayout({
     redirect("/?forbidden=1");
   }
 
+  // 신규 의뢰 개수 — 사이드바 뱃지용
+  // inquiries 테이블이 없으면 0으로 fallback (마이그레이션 미적용 케이스 안전)
+  let newInquiryCount = 0;
+  try {
+    const { count } = await supabase
+      .from("inquiries")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "new");
+    newInquiryCount = count ?? 0;
+  } catch {
+    newInquiryCount = 0;
+  }
+
   return (
     <div className="flex min-h-screen bg-neutral-50">
       <aside className="w-60 bg-white border-r border-neutral-200 flex flex-col">
@@ -57,6 +77,8 @@ export default async function AdminLayout({
         <nav className="flex-1 px-2 py-4 space-y-1">
           {NAV.map((item) => {
             const Icon = item.icon;
+            const showBadge =
+              item.badgeKind === "new-inquiries" && newInquiryCount > 0;
             return (
               <Link
                 key={item.href}
@@ -64,7 +86,12 @@ export default async function AdminLayout({
                 className="flex items-center gap-3 px-3 py-2 rounded text-sm text-neutral-700 hover:bg-neutral-100"
               >
                 <Icon className="h-4 w-4" />
-                {item.label}
+                <span className="flex-1">{item.label}</span>
+                {showBadge && (
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-600 text-white min-w-[20px] text-center">
+                    {newInquiryCount > 99 ? "99+" : newInquiryCount}
+                  </span>
+                )}
               </Link>
             );
           })}

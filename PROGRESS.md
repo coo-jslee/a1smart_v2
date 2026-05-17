@@ -1,13 +1,12 @@
 # A1-SMART v2.0 진행 상황
 
-> 마지막 작업: 2026-05-17 (M7 후속2 완료. /buy-request 매수 의뢰 페이지 추가 — 매매·전세·월세 거래 형태 분기, inquiries 테이블 확장)
+> 마지막 작업: 2026-05-17 (M7 후속3 완료. /admin/inquiries 일람 페이지 — 필터·페이지네이션·상세 다이얼로그·상태 변경·내부 메모·사이드바 뱃지)
 > 다음 작업 (택일):
->   ① **admin inquiries 일람 페이지** — 들어온 문의·매도·매수 의뢰 처리용 (~30분)
->   ② **호스팅 결정 후 Vercel/Cafe24 배포** (선택)
->   ③ **M6 후속 (PDF 변환)** — LibreOffice headless 또는 Puppeteer 도입
->   ④ **매물 사진 추가 UI** — 매물 상세(admin)에서 image_paths 수동 업로드
->   ⑤ **M4.2 공시지가 fallback** (단독건물 시세 보강)
->   ⑥ **M5 노션 → Supabase 마이그레이션** (v1.7 데이터 이관)
+>   ① **호스팅 결정 후 Vercel/Cafe24 배포** (선택)
+>   ② **M6 후속 (PDF 변환)** — LibreOffice headless 또는 Puppeteer 도입
+>   ③ **매물 사진 추가 UI** — 매물 상세(admin)에서 image_paths 수동 업로드
+>   ④ **M4.2 공시지가 fallback** (단독건물 시세 보강)
+>   ⑤ **M5 노션 → Supabase 마이그레이션** (v1.7 데이터 이관)
 
 ---
 
@@ -25,6 +24,7 @@
 - [x] **M7 (1차)** 공개 홈 + 매물 리스트 + 매물 상세 (3페이지). 시드 매물 7건. 회원 외부용 보고서 다운로드.
 - [x] **M7 (후속)** 회사 소개·문의·매도 의뢰 + 약관/개인정보 (5페이지) + inquiries 테이블 + 문의 Server Actions
 - [x] **M7 (후속2)** 매수 의뢰 페이지 `/buy-request` — 매매/전세/월세 거래 형태 분기 + inquiries 컬럼 확장
+- [x] **M7 (후속3)** /admin/inquiries 의뢰 관리 — 필터·KPI·상세 다이얼로그·상태 변경·내부 메모·사이드바 신규 뱃지
 - [ ] **M8** 통합 QA·도메인 연결 (호스팅 계약 후)
 
 ---
@@ -219,7 +219,7 @@ claude
 
 ---
 
-## 🛠 신규 라우트 (M7 후속2, 총 21개)
+## 🛠 신규 라우트 (M7 후속3, 총 22개)
 
 ```
 ƒ /                              홈 (Hero + 최신 매물 6건)               ★ M7
@@ -235,6 +235,7 @@ claude
 ƒ /admin/dashboard               관리자 대시보드
 ƒ /admin/properties/new          단계 1 자료수집
 ƒ /admin/properties/[asr]        매물 상세 + 시세 갱신 + 외부 평가 입력 + 분석보고서 생성/관리
+ƒ /admin/inquiries               고객 의뢰 관리 (필터·KPI·상세·상태 변경)   ★ M7 후속3
 ƒ /api/upload                    Storage 업로드
 ƒ /api/pipeline/extract          M3 단계 4 분석 (Claude PDF 직접)
 ƒ /api/pipeline/price            M4 단계 5 시세 평가
