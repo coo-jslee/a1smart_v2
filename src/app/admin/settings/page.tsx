@@ -36,13 +36,17 @@ export default async function AdminSettingsPage() {
         .then((r) => r.data)
     : null;
 
-  // 환경 변수 보유 여부 (실제 값은 노출 X)
+  // 환경 변수 보유 여부 + 길이 (실제 값은 노출 X)
+  function len(v: string | undefined): number {
+    return v?.length ?? 0;
+  }
   const env = {
-    SUPABASE_URL: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
-    SERVICE_ROLE: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
-    ANTHROPIC: !!process.env.ANTHROPIC_API_KEY,
-    MOLIT: !!process.env.MOLIT_RTMS_API_KEY,
-    CLOVA_OCR: !!process.env.CLOVA_OCR_URL && !!process.env.CLOVA_OCR_SECRET,
+    SUPABASE_URL: len(process.env.NEXT_PUBLIC_SUPABASE_URL),
+    SERVICE_ROLE: len(process.env.SUPABASE_SERVICE_ROLE_KEY),
+    ANTHROPIC: len(process.env.ANTHROPIC_API_KEY),
+    MOLIT: len(process.env.MOLIT_RTMS_API_KEY),
+    CLOVA_OCR_URL: len(process.env.CLOVA_OCR_URL),
+    CLOVA_OCR_SECRET: len(process.env.CLOVA_OCR_SECRET),
   };
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
@@ -118,26 +122,34 @@ export default async function AdminSettingsPage() {
         title="외부 API 연동"
         icon={<Brain className="h-4 w-4 text-blue-900" />}
       >
-        <ApiStatus name="Supabase URL" ok={env.SUPABASE_URL} />
+        <ApiStatus
+          name="Supabase URL"
+          length={env.SUPABASE_URL}
+          envKey="NEXT_PUBLIC_SUPABASE_URL"
+        />
         <ApiStatus
           name="Supabase Service Role Key"
-          ok={env.SERVICE_ROLE}
+          length={env.SERVICE_ROLE}
           critical
+          envKey="SUPABASE_SERVICE_ROLE_KEY"
         />
         <ApiStatus
           name="Anthropic (Claude API)"
-          ok={env.ANTHROPIC}
+          length={env.ANTHROPIC}
           desc="공부 PDF 분석·전문가 의견 생성"
+          envKey="ANTHROPIC_API_KEY"
         />
         <ApiStatus
           name="국토교통부 RTMS API"
-          ok={env.MOLIT}
+          length={env.MOLIT}
           desc="실거래가 9개 endpoint"
+          envKey="MOLIT_RTMS_API_KEY"
         />
         <ApiStatus
           name="Clova OCR"
-          ok={env.CLOVA_OCR}
-          desc="(선택) 한글 OCR 보강 — 미설정 시 Claude PDF 직접 추출만 사용"
+          length={env.CLOVA_OCR_URL && env.CLOVA_OCR_SECRET ? env.CLOVA_OCR_URL : 0}
+          desc={`(선택) 한글 OCR 보강 — URL ${env.CLOVA_OCR_URL}자, SECRET ${env.CLOVA_OCR_SECRET}자`}
+          envKey="CLOVA_OCR_URL + CLOVA_OCR_SECRET"
         />
       </Section>
 
@@ -237,15 +249,18 @@ function Row({ k, v }: { k: string; v: React.ReactNode }) {
 
 function ApiStatus({
   name,
-  ok,
+  length,
   desc,
   critical,
+  envKey,
 }: {
   name: string;
-  ok: boolean;
+  length: number;
   desc?: string;
   critical?: boolean;
+  envKey?: string;
 }) {
+  const ok = length > 0;
   return (
     <div className="flex items-start gap-3 py-2 text-sm border-b last:border-b-0">
       {ok ? (
@@ -259,13 +274,25 @@ function ApiStatus({
         />
       )}
       <div className="flex-1">
-        <div className="font-medium text-neutral-900">{name}</div>
+        <div className="font-medium text-neutral-900 flex items-center gap-2">
+          {name}
+          {ok && (
+            <span className="text-xs font-mono text-green-700 bg-green-50 border border-green-200 px-1.5 py-0.5 rounded">
+              {length}자
+            </span>
+          )}
+        </div>
         {desc && <div className="text-xs text-neutral-500 mt-0.5">{desc}</div>}
+        {envKey && (
+          <div className="text-xs text-neutral-400 mt-0.5 font-mono">
+            env: {envKey}
+          </div>
+        )}
         {!ok && (
           <div className="text-xs text-amber-700 mt-0.5">
             {critical
-              ? "❗ 필수 키 누락 — .env 확인 필요"
-              : "(미설정 — 해당 기능 비활성)"}
+              ? "❗ 필수 키 누락 — .env 확인 후 dev 서버 재시작 필요"
+              : "(.env 에 값 없음 또는 dev 서버 재시작 필요)"}
           </div>
         )}
       </div>
