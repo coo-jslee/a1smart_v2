@@ -8,11 +8,13 @@
  *  - 푸터: PublicFooter
  */
 import Link from "next/link";
-import { ArrowRight, FileText, Shield, Sparkles } from "lucide-react";
+import { ArrowRight, FileText, Shield, Sparkles, Brain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { PublicNavbar } from "@/components/public/public-navbar";
 import { PublicFooter } from "@/components/public/public-footer";
+import { HeroAiBg } from "@/components/public/hero-ai-bg";
+import { SkylineBanner } from "@/components/public/skyline-banner";
 import {
   PropertyCard,
   type PropertyCardData,
@@ -54,81 +56,119 @@ export default async function Home() {
     <div className="flex flex-col flex-1 min-h-screen bg-white">
       <PublicNavbar />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-neutral-50" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(26,61,122,0.08),transparent_50%)]" />
-        <div className="relative max-w-6xl mx-auto px-6 py-20 md:py-28">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100/60 text-blue-900 text-xs font-medium mb-6">
-              <Sparkles className="h-3 w-3" />
-              AI 분석 부동산 플랫폼
+      {/* Hero — 노션 톤 (짙은 네이비 + 청록 네온 + AI 회로 SVG) */}
+      <section className="relative overflow-hidden border-b border-blue-950/40 bg-[#0B1F4D]">
+        {/* 배경 그라데이션 (어두운 네이비 → 코발트) */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#050F2C] via-[#0B1F4D] to-[#1A3D7A]" />
+        {/* 코너 글로우 */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_30%,rgba(34,211,238,0.18),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_90%,rgba(26,61,122,0.5),transparent_50%)]" />
+
+        {/* AI 회로 SVG (우측에 절대 위치, 모바일 옅게) */}
+        <div className="absolute right-0 top-0 bottom-0 w-full md:w-1/2 opacity-30 md:opacity-90 pointer-events-none">
+          <HeroAiBg />
+        </div>
+
+        {/* 콘텐츠 */}
+        <div className="relative max-w-6xl mx-auto px-6 py-24 md:py-32">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 text-xs font-medium mb-6 backdrop-blur-sm">
+              <Brain className="h-3.5 w-3.5" />
+              AI 활용 더 똑똑한 부동산중개법인
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight text-neutral-900">
+            <h1 className="text-4xl md:text-6xl font-bold leading-[1.15] tracking-tight text-white">
               30년 경력 전문가가 설계한
               <br />
-              <span className="text-blue-900">정확한 부동산 분석</span>
+              <span className="bg-gradient-to-r from-cyan-300 via-cyan-200 to-white bg-clip-text text-transparent">
+                정확한 부동산 분석
+              </span>
             </h1>
-            <p className="mt-6 text-lg text-neutral-600 leading-relaxed">
+            <p className="mt-7 text-lg text-blue-100/90 leading-relaxed">
               공부(등기·토지·건축) 자동 분석, 국토부 실거래가 기반 합의시세,
               <br />
               권리하자 진단까지 — 한 곳에서 완결되는 부동산 AI 자동화.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-9 flex flex-wrap gap-3">
               <Link href="/properties">
-                <Button size="lg" className="bg-blue-900 hover:bg-blue-800">
+                <Button
+                  size="lg"
+                  className="bg-cyan-400 text-blue-950 hover:bg-cyan-300 font-semibold shadow-lg shadow-cyan-500/20"
+                >
                   공개 매물 보기
                   <ArrowRight className="h-4 w-4 ml-1" />
                 </Button>
               </Link>
               <Link href="/signup">
-                <Button size="lg" variant="outline">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-white/30 text-white hover:bg-white/10 hover:text-white bg-transparent"
+                >
                   회원가입
                 </Button>
               </Link>
             </div>
-            <p className="mt-4 text-xs text-neutral-500">
+            <p className="mt-4 text-xs text-blue-200/60">
               ※ 매물 상세·분석보고서 다운로드는 회원 전용입니다
             </p>
           </div>
         </div>
+
+        {/* 하단 페이드 (다음 섹션과 자연스럽게 연결) */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-white pointer-events-none" />
       </section>
 
-      {/* 강점 3분할 */}
-      <section className="border-b bg-neutral-50/40">
-        <div className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-3 gap-6">
-          {[
-            {
-              icon: Sparkles,
-              title: "7단계 자동 분석",
-              desc: "공부 PDF 업로드 → OCR + Claude LLM → 매물 자동 등록까지 1분.",
-            },
-            {
-              icon: FileText,
-              title: "합의 시세 산출",
-              desc: "국토부 실거래 + 6개 평가방법 + 권리하자 디스카운트로 정확한 가격.",
-            },
-            {
-              icon: Shield,
-              title: "권리하자 진단",
-              desc: "근저당·가압류·압류·경매 자동 분석 → 위험등급(안전·주의·위험) 분류.",
-            },
-          ].map((f) => (
-            <div
-              key={f.title}
-              className="p-6 bg-white border rounded-lg hover:shadow-sm transition-shadow"
-            >
-              <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-900 flex items-center justify-center mb-4">
-                <f.icon className="h-5 w-5" />
-              </div>
-              <h3 className="font-bold text-lg text-neutral-900">{f.title}</h3>
-              <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
-                {f.desc}
-              </p>
+      {/* 강점 3분할 — 다크 Hero 다음에 와도 자연스러운 톤 */}
+      <section className="border-b bg-white relative">
+        <div className="max-w-6xl mx-auto px-6 py-20">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 text-blue-900 text-xs font-medium mb-3">
+              핵심 가치
             </div>
-          ))}
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-neutral-900">
+              사람이 빠뜨리는 정보까지
+              <span className="text-blue-900"> AI가 정확히</span>
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                icon: Sparkles,
+                title: "7단계 자동 분석",
+                desc: "공부 PDF 업로드 → OCR + Claude LLM → 매물 자동 등록까지 1분.",
+              },
+              {
+                icon: FileText,
+                title: "합의 시세 산출",
+                desc: "국토부 실거래 + 6개 평가방법 + 권리하자 디스카운트로 정확한 가격.",
+              },
+              {
+                icon: Shield,
+                title: "권리하자 진단",
+                desc: "근저당·가압류·압류·경매 자동 분석 → 위험등급(안전·주의·위험) 분류.",
+              },
+            ].map((f) => (
+              <div
+                key={f.title}
+                className="group p-6 bg-white border border-neutral-200 rounded-xl hover:border-blue-300 hover:shadow-lg hover:shadow-blue-900/5 transition-all"
+              >
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-cyan-600 text-white flex items-center justify-center mb-4 shadow-md shadow-blue-900/20 group-hover:scale-105 transition-transform">
+                  <f.icon className="h-5 w-5" />
+                </div>
+                <h3 className="font-bold text-lg text-neutral-900">
+                  {f.title}
+                </h3>
+                <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
+                  {f.desc}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
+
+      {/* 도시 스카이라인 배너 (서울 부동산 ribbon) */}
+      <SkylineBanner />
 
       {/* 최신 공개 매물 */}
       <section>
