@@ -25,10 +25,10 @@ export default function IntakePage() {
             매도 의뢰
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-white">
-            매물 <span className="text-yellow-300">등록 의뢰</span>
+            매도 의뢰 — <span className="text-yellow-300">매매 · 전세 · 월세</span>
           </h1>
           <p className="mt-3 text-sm text-blue-100/80 leading-relaxed max-w-3xl">
-            소유하신 부동산을 매도 의뢰하시면 AI 자동 분석 + 합의시세 산출 +
+            소유하신 부동산을 매도·임대 의뢰하시면 AI 자동 분석 + 합의시세 산출 +
             분석보고서 발행까지 진행합니다. 의뢰 접수 후 영업일 1일 이내
             담당자가 연락드립니다.
           </p>
@@ -66,20 +66,34 @@ export default function IntakePage() {
               </ol>
             </div>
 
-            <div className="bg-cyan-400/5 border border-cyan-400/20 rounded-lg p-4 space-y-2 text-xs text-cyan-100 leading-relaxed">
-              <div className="flex items-start gap-2">
-                <Shield className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-cyan-300" />
-                <span>
-                  의뢰자 정보 및 매물 정보는 매도 검토 목적으로만 사용되며
-                  외부 공유되지 않습니다.
-                </span>
+            <div className="bg-cyan-400/5 border border-cyan-400/20 rounded-lg p-4 text-xs text-cyan-100 leading-relaxed space-y-2">
+              <div>
+                <strong className="text-yellow-300">매매</strong> — 희망 매매가
+                + 권리관계·임대차 현황
               </div>
-              <div className="flex items-start gap-2">
-                <FileText className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-cyan-300" />
-                <span>
-                  등기부등본 자동 발급은 매도위임 동의 후에만 진행됩니다 (관련
-                  법규 준수).
-                </span>
+              <div>
+                <strong className="text-yellow-300">전세</strong> — 희망 전세
+                보증금 (전세가율 분석 동반)
+              </div>
+              <div>
+                <strong className="text-yellow-300">월세</strong> — 희망
+                보증금 + 월세
+              </div>
+              <div className="pt-2 border-t border-cyan-400/20 space-y-2 text-cyan-100/80">
+                <div className="flex items-start gap-2">
+                  <Shield className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-cyan-300" />
+                  <span>
+                    의뢰자 정보 및 매물 정보는 검토 목적으로만 사용되며 외부
+                    공유되지 않습니다.
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <FileText className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-cyan-300" />
+                  <span>
+                    등기부등본 자동 발급은 매도위임 동의 후에만 진행됩니다 (관련
+                    법규 준수).
+                  </span>
+                </div>
               </div>
             </div>
           </div>

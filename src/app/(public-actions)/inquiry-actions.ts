@@ -107,18 +107,8 @@ export async function submitInquiry(
     return { ok: false, error: "전화번호 또는 이메일 중 하나는 입력해 주세요." };
   }
 
-  // 6) 매도 의뢰면 property_type·region 필수
-  if (data.inquiry_type === "sell") {
-    if (!data.property_type || !data.region) {
-      return {
-        ok: false,
-        error: "매물 종류와 소재지(시군구·동)를 입력해 주세요.",
-      };
-    }
-  }
-
-  // 6-b) 매수 의뢰면 transaction_type, property_type, region 필수
-  if (data.inquiry_type === "buy") {
+  // 6) 매도/매수 의뢰 공통 필수: transaction_type + property_type + region
+  if (data.inquiry_type === "sell" || data.inquiry_type === "buy") {
     if (!data.transaction_type) {
       return {
         ok: false,
@@ -126,13 +116,13 @@ export async function submitInquiry(
       };
     }
     if (!data.property_type || !data.region) {
+      const label = data.inquiry_type === "sell" ? "소재지" : "희망 지역";
       return {
         ok: false,
-        error: "매물 종류와 희망 지역을 입력해 주세요.",
+        error: `매물 종류와 ${label}(시군구·동)을 입력해 주세요.`,
       };
     }
-    // 월세 의뢰면 monthly_rent_max 권장 (필수까지는 X — 협의 가능)
-    // 예산 (expected_price 상한) 도 권장
+    // 월세 의뢰는 monthly_rent_max 권장 (필수 X — 협의 가능)
   }
 
   // 7) Supabase INSERT

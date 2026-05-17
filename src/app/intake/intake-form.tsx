@@ -1,12 +1,14 @@
 "use client";
 
 /**
- * 매도 의뢰 폼 (Client Component).
+ * 매도 의뢰 폼 (Client Component) — 거래 형태 분기 지원.
  *
  *  - inquiry_type='sell' 로 submitInquiry Server Action 호출
- *  - 매물 정보: property_type, region, expected_price, area_m2
- *  - 의뢰인: name, phone, email
- *  - 동의: privacy(필수), marketing(선택), 매도위임(동의 내용 안내)
+ *  - transaction_type(매매/전세/월세) 에 따라 가격 입력 필드 분기:
+ *      매매: expected_price (희망 매매가)
+ *      전세: expected_price (희망 전세 보증금)
+ *      월세: expected_price (보증금) + monthly_rent_max (희망 월세)
+ *  - 공통: name, phone/email, property_type, region, area_m2, message, 동의
  */
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
@@ -18,6 +20,10 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/components/ui/radio-group";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -25,6 +31,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { submitInquiry } from "../(public-actions)/inquiry-actions";
+
+type TxType = "매매" | "전세" | "월세";
 
 const PROPERTY_TYPES = [
   "아파트",
@@ -42,13 +50,15 @@ export function IntakeForm() {
   const [pending, startTransition] = useTransition();
   const [done, setDone] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [txType, setTxType] = useState<TxType>("매매");
   const [propertyType, setPropertyType] = useState<string>("아파트");
 
   function handleSubmit(formData: FormData) {
     setErrorMsg(null);
     formData.set("inquiry_type", "sell");
+    formData.set("transaction_type", txType);
     formData.set("property_type", propertyType);
-    formData.set("subject", `매도 의뢰 — ${propertyType}`);
+    formData.set("subject", `매도 의뢰 — ${txType} / ${propertyType}`);
     startTransition(async () => {
       const res = await submitInquiry(formData);
       if (res.ok) {
@@ -88,8 +98,50 @@ export function IntakeForm() {
         aria-hidden="true"
       />
 
-      {/* 의뢰인 정보 */}
+      {/* 거래 형태 — 핵심 분기 */}
       <div>
+        <Label className="text-sm font-medium text-neutral-700 mb-2 block">
+          거래 형태 <span className="text-red-600">*</span>
+        </Label>
+        <RadioGroup
+          value={txType}
+          onValueChange={(v) => v && setTxType(v as TxType)}
+          className="grid grid-cols-3 gap-2"
+        >
+          {(["매매", "전세", "월세"] as TxType[]).map((t) => {
+            const active = txType === t;
+            return (
+              <label
+                key={t}
+                htmlFor={`tx-${t}`}
+                className={
+                  "border rounded-lg p-3 text-center cursor-pointer transition-colors " +
+                  (active
+                    ? "border-blue-900 bg-blue-50 text-blue-900 ring-1 ring-blue-200"
+                    : "border-neutral-200 bg-white text-neutral-700 hover:border-blue-200")
+                }
+              >
+                <RadioGroupItem
+                  value={t}
+                  id={`tx-${t}`}
+                  className="sr-only"
+                />
+                <div className="font-bold text-sm">{t}</div>
+                <div className="text-xs text-neutral-500 mt-0.5">
+                  {t === "매매"
+                    ? "희망 매매가"
+                    : t === "전세"
+                    ? "희망 보증금"
+                    : "보증금 + 월세"}
+                </div>
+              </label>
+            );
+          })}
+        </RadioGroup>
+      </div>
+
+      {/* 의뢰인 정보 */}
+      <div className="pt-3 border-t">
         <div className="text-sm font-medium text-neutral-700 mb-2">
           1. 의뢰인 정보
         </div>
@@ -175,19 +227,27 @@ export function IntakeForm() {
             />
           </div>
         </div>
-        <div className="grid sm:grid-cols-2 gap-4 mt-3">
-          <div>
-            <Label htmlFor="area_m2" className="text-xs mb-1.5 block">
-              전용면적 (㎡)
-            </Label>
-            <Input
-              id="area_m2"
-              name="area_m2"
-              type="number"
-              step="0.01"
-              placeholder="예: 84.95"
-            />
-          </div>
+        <div className="mt-3">
+          <Label htmlFor="area_m2" className="text-xs mb-1.5 block">
+            전용면적 (㎡)
+          </Label>
+          <Input
+            id="area_m2"
+            name="area_m2"
+            type="number"
+            step="0.01"
+            placeholder="예: 84.95"
+          />
+        </div>
+      </div>
+
+      {/* 희망 가격 — 거래 형태별 분기 */}
+      <div className="pt-3 border-t">
+        <div className="text-sm font-medium text-neutral-700 mb-2">
+          3. 희망 가격 ({txType})
+        </div>
+
+        {txType === "매매" && (
           <div>
             <Label htmlFor="expected_price" className="text-xs mb-1.5 block">
               희망 매매가 (원)
@@ -199,15 +259,69 @@ export function IntakeForm() {
               inputMode="numeric"
               placeholder="예: 500000000 (5억)"
             />
-            <p className="text-xs text-neutral-400 mt-1">숫자만 입력 (원 단위)</p>
+            <p className="text-xs text-neutral-500 mt-1">
+              ※ AI 합의시세 산출 후 시장가 대비 적정성 안내드립니다.
+            </p>
           </div>
-        </div>
+        )}
+
+        {txType === "전세" && (
+          <div>
+            <Label htmlFor="expected_price" className="text-xs mb-1.5 block">
+              희망 전세 보증금 (원)
+            </Label>
+            <Input
+              id="expected_price"
+              name="expected_price"
+              type="text"
+              inputMode="numeric"
+              placeholder="예: 300000000 (3억)"
+            />
+            <p className="text-xs text-neutral-500 mt-1">
+              ※ 전세가율 분석 후 적정가 안내드립니다.
+            </p>
+          </div>
+        )}
+
+        {txType === "월세" && (
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="expected_price" className="text-xs mb-1.5 block">
+                희망 보증금 (원)
+              </Label>
+              <Input
+                id="expected_price"
+                name="expected_price"
+                type="text"
+                inputMode="numeric"
+                placeholder="예: 10000000 (1천만원)"
+              />
+            </div>
+            <div>
+              <Label
+                htmlFor="monthly_rent_max"
+                className="text-xs mb-1.5 block"
+              >
+                희망 월세 (원/월)
+              </Label>
+              <Input
+                id="monthly_rent_max"
+                name="monthly_rent_max"
+                type="text"
+                inputMode="numeric"
+                placeholder="예: 700000 (70만원)"
+              />
+            </div>
+          </div>
+        )}
+
+        <p className="text-xs text-neutral-400 mt-2">숫자만 입력 (원 단위)</p>
       </div>
 
       {/* 상세 내용 */}
       <div className="pt-3 border-t">
         <div className="text-sm font-medium text-neutral-700 mb-2">
-          3. 매물 상세 / 요청사항
+          4. 매물 상세 / 요청사항
         </div>
         <Textarea
           id="message"
@@ -220,7 +334,7 @@ export function IntakeForm() {
 - 임대차 계약 만료일 2026-12-31
 - 권리관계: 근저당 1.5억 (○○은행)
 - 특이사항: 엘리베이터 있음, 주차 1대
-- 매도 희망 시기: 6개월 내`}
+- 매도/임대 희망 시기: 6개월 내`}
         />
         <p className="text-xs text-neutral-500 mt-1">
           매물 특성·권리관계·희망 거래 시기를 자유롭게 적어 주세요. (5자 이상)
