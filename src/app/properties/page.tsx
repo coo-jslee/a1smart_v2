@@ -143,30 +143,31 @@ export default async function PropertiesPage({
       : "";
 
   return (
-    <div className="flex flex-col flex-1 min-h-screen bg-neutral-50/40">
+    <div className="dark flex flex-col flex-1 min-h-screen bg-[#0B1F4D] text-white">
       <PublicNavbar />
 
-      <section className="bg-white border-b">
+      <section className="bg-[#050F2C] border-b border-white/10">
         <div className="max-w-6xl mx-auto px-6 py-10">
-          <h1 className="text-3xl font-bold tracking-tight text-neutral-900">
+          <h1 className="text-3xl font-bold tracking-tight text-white">
             공개 매물
           </h1>
-          <p className="mt-2 text-sm text-neutral-500">
-            AI 합의시세·권리분석이 완료된 매물 목록 — 총 {totalCount}건
+          <p className="mt-2 text-sm text-blue-200/70">
+            AI 합의시세·권리분석이 완료된 매물 목록 — 총{" "}
+            <span className="font-bold text-yellow-300">{totalCount}</span>건
           </p>
         </div>
       </section>
 
       {/* 필터 바 */}
-      <section className="bg-white border-b">
+      <section className="bg-blue-950/40 border-b border-white/10">
         <div className="max-w-6xl mx-auto px-6 py-5">
-          <div className="flex items-center gap-2 mb-3 text-sm text-neutral-600">
+          <div className="flex items-center gap-2 mb-3 text-sm text-blue-100/80">
             <Filter className="h-4 w-4" />
             <span className="font-medium">필터</span>
             {(type || region || risk || priceRangeValue) && (
               <Link
                 href="/properties"
-                className="ml-auto text-xs text-blue-700 hover:underline"
+                className="ml-auto text-xs text-yellow-300 hover:text-yellow-200 hover:underline"
               >
                 초기화
               </Link>
@@ -237,7 +238,7 @@ export default async function PropertiesPage({
           </div>
 
           <div className="mt-4 flex items-center gap-2 text-sm">
-            <span className="text-neutral-500">정렬:</span>
+            <span className="text-blue-200/70">정렬:</span>
             <FilterChip
               href={buildUrl({ sort: undefined })}
               active={sort === "newest"}
@@ -264,14 +265,14 @@ export default async function PropertiesPage({
       <section className="flex-1">
         <div className="max-w-6xl mx-auto px-6 py-10">
           {list.length === 0 ? (
-            <div className="text-center py-24 text-neutral-400">
+            <div className="text-center py-24 text-blue-300/50">
               <Building2 className="h-16 w-16 mx-auto mb-3 opacity-50" />
               <div className="text-base">
                 선택한 조건의 매물이 없습니다.
               </div>
               <Link
                 href="/properties"
-                className="text-sm text-blue-700 hover:underline mt-2 inline-block"
+                className="text-sm text-yellow-300 hover:text-yellow-200 hover:underline mt-2 inline-block"
               >
                 전체 매물 보기
               </Link>
@@ -289,17 +290,25 @@ export default async function PropertiesPage({
             <div className="mt-10 flex items-center justify-center gap-2">
               {page > 1 && (
                 <Link href={buildUrl({ page: String(page - 1) })}>
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-white/20 text-blue-100 hover:bg-white/10 hover:text-white bg-transparent"
+                  >
                     이전
                   </Button>
                 </Link>
               )}
-              <span className="text-sm text-neutral-500 px-4">
+              <span className="text-sm text-blue-200/70 px-4">
                 {page} / {totalPages}
               </span>
               {page < totalPages && (
                 <Link href={buildUrl({ page: String(page + 1) })}>
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-white/20 text-blue-100 hover:bg-white/10 hover:text-white bg-transparent"
+                  >
                     다음
                     <ArrowRight className="h-3 w-3 ml-1" />
                   </Button>
@@ -324,7 +333,7 @@ function FilterGroup({
 }) {
   return (
     <div>
-      <div className="text-xs font-medium text-neutral-500 mb-1.5">{label}</div>
+      <div className="text-xs font-medium text-blue-200/60 mb-1.5">{label}</div>
       <div className="flex flex-wrap gap-1">{children}</div>
     </div>
   );
@@ -348,8 +357,8 @@ function FilterChip({
         (size === "sm" ? "px-2 py-0.5 text-xs " : "px-2.5 py-1 text-xs ") +
         "rounded border transition-colors " +
         (active
-          ? "bg-blue-900 border-blue-900 text-white"
-          : "bg-white border-neutral-200 text-neutral-600 hover:border-blue-200 hover:text-blue-900")
+          ? "bg-yellow-400 border-yellow-400 text-blue-950 font-semibold"
+          : "bg-white/5 border-white/15 text-blue-100/80 hover:bg-white/10 hover:border-cyan-400/40 hover:text-cyan-200")
       }
     >
       {label}

@@ -52,7 +52,7 @@ export default async function Home() {
   }));
 
   return (
-    <div className="flex flex-col flex-1 min-h-screen bg-white">
+    <div className="dark flex flex-col flex-1 min-h-screen bg-[#0B1F4D] text-white">
       <PublicNavbar />
 
       {/* Hero — 노션 톤 (AI 회로 + 집 배너 이미지 — 원본 비율 4.5:1 그대로) */}
@@ -115,19 +115,19 @@ export default async function Home() {
         </div>
 
         {/* 하단 페이드 (다음 섹션과 자연스럽게 연결) */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-[#0B1F4D] pointer-events-none" />
       </section>
 
-      {/* 강점 3분할 — 다크 Hero 다음에 와도 자연스러운 톤 */}
-      <section className="border-b bg-white relative">
+      {/* 강점 3분할 — 다크 톤 (다크 Hero 다음에 자연스럽게) */}
+      <section className="border-b border-white/10 relative">
         <div className="max-w-6xl mx-auto px-6 py-20">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 text-blue-900 text-xs font-medium mb-3">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 text-xs font-medium mb-3">
               핵심 가치
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-neutral-900">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
               사람이 빠뜨리는 정보까지
-              <span className="text-blue-900"> AI가 정확히</span>
+              <span className="text-yellow-300"> AI가 정확히</span>
             </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -150,15 +150,15 @@ export default async function Home() {
             ].map((f) => (
               <div
                 key={f.title}
-                className="group p-6 bg-white border border-neutral-200 rounded-xl hover:border-blue-300 hover:shadow-lg hover:shadow-blue-900/5 transition-all"
+                className="group p-6 bg-blue-950/40 border border-white/10 rounded-xl hover:border-cyan-400/40 hover:bg-blue-900/40 hover:shadow-lg hover:shadow-cyan-500/10 transition-all backdrop-blur-sm"
               >
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900 to-cyan-600 text-white flex items-center justify-center mb-4 shadow-md shadow-blue-900/20 group-hover:scale-105 transition-transform">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-600 text-blue-950 flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/30 group-hover:scale-105 transition-transform">
                   <f.icon className="h-5 w-5" />
                 </div>
-                <h3 className="font-bold text-lg text-neutral-900">
+                <h3 className="font-bold text-lg text-white">
                   {f.title}
                 </h3>
-                <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
+                <p className="mt-2 text-sm text-blue-100/80 leading-relaxed">
                   {f.desc}
                 </p>
               </div>
@@ -175,16 +175,16 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto px-6 py-16">
           <div className="flex items-end justify-between mb-8">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-neutral-900">
+              <h2 className="text-2xl font-bold tracking-tight text-white">
                 최신 공개 매물
               </h2>
-              <p className="mt-1 text-sm text-neutral-500">
+              <p className="mt-1 text-sm text-blue-200/70">
                 AI 합의시세 + 권리분석이 완료된 매물입니다
               </p>
             </div>
             <Link
               href="/properties"
-              className="text-sm font-medium text-blue-900 hover:underline flex items-center gap-1"
+              className="text-sm font-medium text-yellow-300 hover:text-yellow-200 hover:underline flex items-center gap-1"
             >
               전체 보기
               <ArrowRight className="h-4 w-4" />
@@ -192,7 +192,7 @@ export default async function Home() {
           </div>
 
           {list.length === 0 ? (
-            <div className="text-center py-16 text-neutral-400">
+            <div className="text-center py-16 text-blue-300/50">
               아직 공개 매물이 없습니다.
             </div>
           ) : (

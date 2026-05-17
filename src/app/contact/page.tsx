@@ -14,17 +14,20 @@ export const dynamic = "force-dynamic";
 
 export default function ContactPage() {
   return (
-    <div className="flex flex-col flex-1 min-h-screen bg-neutral-50/40">
+    <div className="dark flex flex-col flex-1 min-h-screen bg-[#0B1F4D] text-white">
       <PublicNavbar />
 
-      <section className="bg-white border-b">
+      <section className="bg-[#050F2C] border-b border-white/10">
         <div className="max-w-5xl mx-auto px-6 py-12">
-          <h1 className="text-3xl font-bold tracking-tight text-neutral-900">
-            문의하기
+          <h1 className="text-3xl font-bold tracking-tight text-white">
+            문의<span className="text-yellow-300">하기</span>
           </h1>
-          <p className="mt-2 text-sm text-neutral-500">
+          <p className="mt-2 text-sm text-blue-200/70">
             매물 문의·일반 문의는 폼으로, 매도 의뢰는{" "}
-            <a href="/intake" className="text-blue-900 hover:underline">
+            <a
+              href="/intake"
+              className="text-yellow-300 hover:text-yellow-200 hover:underline"
+            >
               매도 의뢰 페이지
             </a>{" "}
             를 이용해 주세요.
@@ -36,35 +39,33 @@ export default function ContactPage() {
         <div className="max-w-5xl mx-auto px-6 py-10 grid md:grid-cols-3 gap-8">
           {/* 연락처 정보 */}
           <div className="md:col-span-1 space-y-4">
-            <div className="bg-white border rounded-lg p-5">
-              <h2 className="text-base font-bold text-neutral-900 mb-4">
-                연락처
-              </h2>
+            <div className="bg-blue-950/40 border border-white/15 rounded-lg p-5 backdrop-blur-sm">
+              <h2 className="text-base font-bold text-white mb-4">연락처</h2>
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start gap-3">
-                  <Phone className="h-4 w-4 text-blue-900 mt-0.5 flex-shrink-0" />
+                  <Phone className="h-4 w-4 text-cyan-300 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="text-xs text-neutral-500">전화</div>
-                    <div className="text-neutral-800">(추후 안내)</div>
+                    <div className="text-xs text-blue-200/70">전화</div>
+                    <div className="text-white">(추후 안내)</div>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Mail className="h-4 w-4 text-blue-900 mt-0.5 flex-shrink-0" />
+                  <Mail className="h-4 w-4 text-cyan-300 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="text-xs text-neutral-500">이메일</div>
+                    <div className="text-xs text-blue-200/70">이메일</div>
                     <a
                       href="mailto:coo@aonesmart.biz"
-                      className="text-neutral-800 hover:text-blue-900 hover:underline"
+                      className="text-yellow-300 hover:text-yellow-200 hover:underline"
                     >
                       coo@aonesmart.biz
                     </a>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <MapPin className="h-4 w-4 text-blue-900 mt-0.5 flex-shrink-0" />
+                  <MapPin className="h-4 w-4 text-cyan-300 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="text-xs text-neutral-500">본점 소재지</div>
-                    <div className="text-neutral-800 leading-relaxed">
+                    <div className="text-xs text-blue-200/70">본점 소재지</div>
+                    <div className="text-white leading-relaxed">
                       서울특별시 강서구
                       <br />
                       강서로56길 44, 201호
@@ -74,11 +75,11 @@ export default function ContactPage() {
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Clock className="h-4 w-4 text-blue-900 mt-0.5 flex-shrink-0" />
+                  <Clock className="h-4 w-4 text-cyan-300 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="text-xs text-neutral-500">영업시간</div>
-                    <div className="text-neutral-800">평일 09:00 ~ 18:00</div>
-                    <div className="text-xs text-neutral-500 mt-0.5">
+                    <div className="text-xs text-blue-200/70">영업시간</div>
+                    <div className="text-white">평일 09:00 ~ 18:00</div>
+                    <div className="text-xs text-blue-300/60 mt-0.5">
                       주말·공휴일 휴무
                     </div>
                   </div>
@@ -86,7 +87,7 @@ export default function ContactPage() {
               </ul>
             </div>
 
-            <div className="bg-blue-50/40 border border-blue-100 rounded-lg p-4 text-xs text-blue-900 leading-relaxed">
+            <div className="bg-cyan-400/5 border border-cyan-400/20 rounded-lg p-4 text-xs text-cyan-100 leading-relaxed">
               회원가입 후 매물 상세 페이지에서 외부용 분석보고서를 직접
               다운로드하실 수 있습니다. 가입은 1분이면 충분합니다.
             </div>
@@ -94,11 +95,11 @@ export default function ContactPage() {
 
           {/* 문의 폼 */}
           <div className="md:col-span-2">
-            <div className="bg-white border rounded-lg p-6">
-              <h2 className="text-base font-bold text-neutral-900 mb-1">
+            <div className="bg-blue-950/40 border border-white/15 rounded-lg p-6 backdrop-blur-sm">
+              <h2 className="text-base font-bold text-white mb-1">
                 온라인 문의
               </h2>
-              <p className="text-xs text-neutral-500 mb-5">
+              <p className="text-xs text-blue-200/70 mb-5">
                 담당자가 영업일 24시간 이내 답변 드립니다.
               </p>
               <ContactForm />

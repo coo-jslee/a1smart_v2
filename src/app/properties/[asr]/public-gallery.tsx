@@ -21,9 +21,9 @@ export function PublicGallery({
   const current = images[Math.min(active, images.length - 1)];
 
   return (
-    <div className="bg-white border rounded-lg overflow-hidden">
+    <div className="bg-blue-950/40 border border-white/15 rounded-lg overflow-hidden backdrop-blur-sm">
       {/* 메인 */}
-      <div className="aspect-[16/9] bg-neutral-100">
+      <div className="aspect-[16/9] bg-blue-950">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={current}
@@ -34,7 +34,7 @@ export function PublicGallery({
 
       {/* 썸네일 */}
       {images.length > 1 && (
-        <div className="border-t bg-neutral-50 p-2 flex gap-2 overflow-x-auto">
+        <div className="border-t border-white/10 bg-blue-950/60 p-2 flex gap-2 overflow-x-auto">
           {images.map((url, i) => (
             <button
               key={url}
@@ -43,8 +43,8 @@ export function PublicGallery({
               className={
                 "flex-shrink-0 w-20 h-20 rounded overflow-hidden border-2 transition-all " +
                 (i === active
-                  ? "border-blue-700 ring-2 ring-blue-200"
-                  : "border-transparent hover:border-blue-300 opacity-70 hover:opacity-100")
+                  ? "border-cyan-400 ring-2 ring-cyan-400/30"
+                  : "border-transparent hover:border-cyan-400/60 opacity-60 hover:opacity-100")
               }
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -41,13 +41,13 @@ function won(n: number | null | undefined): string {
 function riskBadgeClass(grade: string | null): string {
   switch (grade) {
     case "안전":
-      return "bg-green-50 text-green-700 border-green-200";
+      return "bg-green-500/90 text-white border-green-400/50";
     case "주의":
-      return "bg-amber-50 text-amber-700 border-amber-200";
+      return "bg-amber-500/90 text-white border-amber-400/50";
     case "위험":
-      return "bg-red-50 text-red-700 border-red-200";
+      return "bg-red-500/90 text-white border-red-400/50";
     default:
-      return "bg-neutral-50 text-neutral-600 border-neutral-200";
+      return "bg-neutral-700/80 text-neutral-200 border-neutral-500/30";
   }
 }
 
@@ -61,10 +61,10 @@ export function PropertyCard({ property }: { property: PropertyCardData }) {
   return (
     <Link
       href={`/properties/${property.asr_code}`}
-      className="group block bg-white border rounded-lg overflow-hidden hover:shadow-md hover:border-blue-200 transition-all"
+      className="group block bg-blue-950/40 border border-white/10 rounded-lg overflow-hidden hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/10 transition-all backdrop-blur-sm"
     >
       {/* 썸네일 */}
-      <div className="relative aspect-[4/3] bg-neutral-100 overflow-hidden">
+      <div className="relative aspect-[4/3] bg-blue-950 overflow-hidden">
         {thumb ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -74,7 +74,7 @@ export function PropertyCard({ property }: { property: PropertyCardData }) {
             loading="lazy"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-neutral-300">
+          <div className="w-full h-full flex items-center justify-center text-blue-300/40">
             <Building2 className="h-16 w-16" />
           </div>
         )}
@@ -84,7 +84,7 @@ export function PropertyCard({ property }: { property: PropertyCardData }) {
           {property.risk_grade && (
             <span
               className={
-                "px-2 py-0.5 text-xs rounded border font-medium " +
+                "px-2 py-0.5 text-xs rounded border font-medium backdrop-blur-sm " +
                 riskBadgeClass(property.risk_grade)
               }
             >
@@ -92,7 +92,7 @@ export function PropertyCard({ property }: { property: PropertyCardData }) {
             </span>
           )}
           {property.is_distressed && (
-            <span className="px-2 py-0.5 text-xs rounded border bg-red-100 text-red-700 border-red-200 font-medium">
+            <span className="px-2 py-0.5 text-xs rounded border bg-red-500/90 text-white border-red-400/50 font-medium backdrop-blur-sm">
               ⚠ 경매
             </span>
           )}
@@ -100,7 +100,7 @@ export function PropertyCard({ property }: { property: PropertyCardData }) {
 
         {/* 매물 종류 (우상단) */}
         {property.property_type && (
-          <div className="absolute top-2 right-2 px-2 py-0.5 text-xs rounded bg-white/90 text-neutral-700 font-medium">
+          <div className="absolute top-2 right-2 px-2 py-0.5 text-xs rounded bg-blue-950/85 text-blue-100 border border-white/10 font-medium backdrop-blur-sm">
             {property.property_type}
           </div>
         )}
@@ -109,19 +109,19 @@ export function PropertyCard({ property }: { property: PropertyCardData }) {
       {/* 본문 */}
       <div className="p-4 space-y-2">
         <div>
-          <div className="text-sm text-neutral-500 truncate">{addr}</div>
+          <div className="text-sm text-blue-200/70 truncate">{addr}</div>
           {property.building_name && (
-            <div className="font-semibold text-neutral-900 truncate">
+            <div className="font-semibold text-white truncate">
               {property.building_name}
             </div>
           )}
         </div>
 
-        <div className="text-xs text-neutral-500 flex flex-wrap gap-x-3 gap-y-1">
+        <div className="text-xs text-blue-200/60 flex flex-wrap gap-x-3 gap-y-1">
           {property.exclusive_m2 && (
             <span>
               전용 {Number(property.exclusive_m2).toFixed(1)}㎡
-              <span className="text-neutral-400">
+              <span className="text-blue-300/40">
                 {" "}
                 ({(Number(property.exclusive_m2) / 3.305).toFixed(1)}평)
               </span>
@@ -135,17 +135,17 @@ export function PropertyCard({ property }: { property: PropertyCardData }) {
           {property.built_year && <span>{property.built_year}년 준공</span>}
         </div>
 
-        <div className="pt-2 flex items-end justify-between border-t">
+        <div className="pt-2 flex items-end justify-between border-t border-white/10">
           <div>
-            <div className="text-xs text-neutral-500">합의시세</div>
-            <div className="text-lg font-bold text-blue-900">
+            <div className="text-xs text-blue-200/60">합의시세</div>
+            <div className="text-lg font-bold text-yellow-300">
               {won(property.sale_price)}
             </div>
           </div>
           {unitMan && (
             <div className="text-right">
-              <div className="text-xs text-neutral-500">㎡당</div>
-              <div className="text-sm font-medium text-neutral-700">
+              <div className="text-xs text-blue-200/60">㎡당</div>
+              <div className="text-sm font-medium text-cyan-200">
                 {unitMan}
               </div>
             </div>
