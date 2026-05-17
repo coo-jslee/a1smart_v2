@@ -56,16 +56,22 @@ export default async function Home() {
     <div className="flex flex-col flex-1 min-h-screen bg-white">
       <PublicNavbar />
 
-      {/* Hero — 노션 톤 (짙은 네이비 + 청록 네온 + AI 회로 SVG) */}
+      {/* Hero — 노션 톤 (AI 회로 + 집 배너 이미지) */}
       <section className="relative overflow-hidden border-b border-blue-950/40 bg-[#0B1F4D]">
-        {/* 배경 그라데이션 (어두운 네이비 → 코발트) */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#050F2C] via-[#0B1F4D] to-[#1A3D7A]" />
-        {/* 코너 글로우 */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_30%,rgba(34,211,238,0.18),transparent_55%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_90%,rgba(26,61,122,0.5),transparent_50%)]" />
+        {/* 1) 메인 배경 이미지 (사용자가 public/hero-ai.png 저장 시 자동 적용) */}
+        <div
+          className="absolute inset-0 bg-no-repeat bg-cover bg-center"
+          style={{ backgroundImage: "url(/hero-ai.png)" }}
+        />
+        {/* 2) 폴백 그라데이션 — 이미지 없으면 보임. 이미지 있으면 좌측 페이드 오버레이 역할 */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#050F2C] via-[#0B1F4D]/90 to-[#0B1F4D]/0" />
+        {/* 3) 좌측 텍스트 가독성 강화 — 좌측 60% 어둡게 */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050F2C]/85 via-[#0B1F4D]/40 to-transparent" />
+        {/* 4) 코너 글로우 */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_90%,rgba(26,61,122,0.6),transparent_50%)]" />
 
-        {/* AI 회로 SVG (우측에 절대 위치, 모바일 옅게) */}
-        <div className="absolute right-0 top-0 bottom-0 w-full md:w-1/2 opacity-30 md:opacity-90 pointer-events-none">
+        {/* 5) 폴백 SVG — public/hero-ai.png 없을 때만 보이도록 우측에 배치 (이미지 있으면 배경 이미지에 가려짐) */}
+        <div className="absolute right-0 top-0 bottom-0 w-full md:w-1/2 opacity-30 md:opacity-70 pointer-events-none mix-blend-screen">
           <HeroAiBg />
         </div>
 
