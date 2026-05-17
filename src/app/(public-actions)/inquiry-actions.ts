@@ -11,7 +11,10 @@
  *  - 봇 방지: 단순 honeypot (필드 'website' 가 비어있어야 함)
  */
 import { z } from "zod";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import {
+  createSupabaseServerClient,
+  createSupabaseServiceRoleClient,
+} from "@/lib/supabase/server";
 import { headers } from "next/headers";
 
 // 원 단위 정수 파서 — "1,000,000원" / "100000" / 100000 모두 허용
@@ -132,17 +135,27 @@ export async function submitInquiry(
     // 예산 (expected_price 상한) 도 권장
   }
 
-  // 7) Supabase INSERT (anon OK, RLS 정책 일치)
-  const supabase = await createSupabaseServerClient();
+  // 7) Supabase INSERT
+  //   - 인증 확인: cookie SSR 클라이언트 (로그인 사용자 user_id 매핑용)
+  //   - INSERT 실행: service_role 클라이언트
+  //
+  //   왜 service_role 인가:
+  //     anon 키로 INSERT … RETURNING 하면 PostgreSQL이 RETURNING 절에 SELECT 권한을
+  //     요구해서 RLS SELECT 정책이 없는 anon 사용자는 행 보안 위반 오류가 발생한다.
+  //     Server Action 안에서만 service_role 을 사용하고, 입력 데이터는 위쪽 zod 로
+  //     이미 엄격히 검증했으므로 RLS WITH CHECK 와 동등한 보호 수준이다.
+  const cookieClient = await createSupabaseServerClient();
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await cookieClient.auth.getUser();
+
+  const svc = createSupabaseServiceRoleClient();
 
   // user-agent header (메타용)
   const hdrs = await headers();
   const userAgent = hdrs.get("user-agent")?.slice(0, 500) ?? null;
 
-  const { data: inserted, error } = await supabase
+  const { data: inserted, error } = await svc
     .from("inquiries")
     .insert({
       inquiry_type: data.inquiry_type,
