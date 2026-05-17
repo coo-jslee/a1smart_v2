@@ -8,12 +8,11 @@
  *  - 푸터: PublicFooter
  */
 import Link from "next/link";
-import { ArrowRight, FileText, Shield, Sparkles, Brain } from "lucide-react";
+import { ArrowRight, FileText, Shield, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { PublicNavbar } from "@/components/public/public-navbar";
 import { PublicFooter } from "@/components/public/public-footer";
-import { HeroAiBg } from "@/components/public/hero-ai-bg";
 import { SkylineBanner } from "@/components/public/skyline-banner";
 import {
   PropertyCard,
@@ -56,49 +55,44 @@ export default async function Home() {
     <div className="flex flex-col flex-1 min-h-screen bg-white">
       <PublicNavbar />
 
-      {/* Hero — 노션 톤 (AI 회로 + 집 배너 이미지) */}
-      <section className="relative overflow-hidden border-b border-blue-950/40 bg-[#0B1F4D]">
-        {/* 1) 메인 배경 이미지 (사용자가 public/hero-ai.png 저장 시 자동 적용) */}
-        <div
-          className="absolute inset-0 bg-no-repeat bg-cover bg-center"
-          style={{ backgroundImage: "url(/hero-ai.png)" }}
-        />
-        {/* 2) 폴백 그라데이션 — 이미지 없으면 보임. 이미지 있으면 좌측 페이드 오버레이 역할 */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#050F2C] via-[#0B1F4D]/90 to-[#0B1F4D]/0" />
-        {/* 3) 좌측 텍스트 가독성 강화 — 좌측 60% 어둡게 */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050F2C]/85 via-[#0B1F4D]/40 to-transparent" />
-        {/* 4) 코너 글로우 */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_90%,rgba(26,61,122,0.6),transparent_50%)]" />
+      {/* Hero — 노션 톤 (AI 회로 + 집 배너 이미지 — 원본 비율 4.5:1 그대로) */}
+      <section className="relative overflow-hidden border-b border-blue-950/40 bg-[#050F2C]">
+        {/* 배경 다크 톤 */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#050F2C] via-[#0B1F4D] to-[#1A3D7A]" />
+        {/* 코너 글로우 */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(34,211,238,0.15),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(26,61,122,0.5),transparent_55%)]" />
 
-        {/* 5) 폴백 SVG — public/hero-ai.png 없을 때만 보이도록 우측에 배치 (이미지 있으면 배경 이미지에 가려짐) */}
-        <div className="absolute right-0 top-0 bottom-0 w-full md:w-1/2 opacity-30 md:opacity-70 pointer-events-none mix-blend-screen">
-          <HeroAiBg />
-        </div>
+        {/* 콘텐츠 영역 — AI 회로 배너를 풀폭으로 표시 (원본 비율 유지) */}
+        <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-20 md:pb-16">
+          {/* AI 회로 배너 — 원본 4.5:1 비율 그대로, contain */}
+          <div className="relative w-full aspect-[2368/448] max-h-[280px] md:max-h-[340px] mx-auto">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero-ai.png"
+              alt="AI 활용 더 똑똑한 부동산중개법인 — 에이원스마트부동산중개법인"
+              className="w-full h-full object-contain"
+            />
+          </div>
 
-        {/* 콘텐츠 */}
-        <div className="relative max-w-6xl mx-auto px-6 py-24 md:py-32">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 text-xs font-medium mb-6 backdrop-blur-sm">
-              <Brain className="h-3.5 w-3.5" />
-              AI 활용 더 똑똑한 부동산중개법인
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold leading-[1.15] tracking-tight text-white">
+          {/* 텍스트 + CTA — 배너 아래 */}
+          <div className="relative mt-8 md:mt-10 text-center max-w-3xl mx-auto">
+            <h1 className="text-3xl md:text-5xl font-bold leading-[1.2] tracking-tight text-white">
               30년 경력 전문가가 설계한
               <br />
               <span className="bg-gradient-to-r from-cyan-300 via-cyan-200 to-white bg-clip-text text-transparent">
                 정확한 부동산 분석
               </span>
             </h1>
-            <p className="mt-7 text-lg text-blue-100/90 leading-relaxed">
+            <p className="mt-5 text-base md:text-lg text-blue-100/90 leading-relaxed">
               공부(등기·토지·건축) 자동 분석, 국토부 실거래가 기반 합의시세,
-              <br />
               권리하자 진단까지 — 한 곳에서 완결되는 부동산 AI 자동화.
             </p>
-            <div className="mt-9 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3 justify-center">
               <Link href="/properties">
                 <Button
                   size="lg"
-                  className="bg-cyan-400 text-blue-950 hover:bg-cyan-300 font-semibold shadow-lg shadow-cyan-500/20"
+                  className="bg-cyan-400 text-blue-950 hover:bg-cyan-300 font-semibold shadow-lg shadow-cyan-500/30"
                 >
                   공개 매물 보기
                   <ArrowRight className="h-4 w-4 ml-1" />
@@ -121,7 +115,7 @@ export default async function Home() {
         </div>
 
         {/* 하단 페이드 (다음 섹션과 자연스럽게 연결) */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-white pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-white pointer-events-none" />
       </section>
 
       {/* 강점 3분할 — 다크 Hero 다음에 와도 자연스러운 톤 */}
