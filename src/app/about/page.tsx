@@ -39,8 +39,8 @@ export default function AboutPage() {
             <span className="text-blue-900">AI 부동산 분석 플랫폼</span>
           </h1>
           <p className="mt-6 text-lg text-neutral-600 leading-relaxed max-w-3xl">
-            에이원스마트부동산중개법인은 등기·토지·건축 공부 자동 분석,
-            국토부 실거래가 기반 합의시세 산출, 권리하자 자동 진단을
+            에이원스마트부동산중개법인 주식회사는 등기·토지·건축 공부 자동
+            분석, 국토부 실거래가 기반 합의시세 산출, 권리하자 자동 진단을
             한 곳에서 제공합니다.
             <br />
             <span className="text-neutral-500 text-base">
@@ -157,15 +157,21 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="border rounded-lg p-6 bg-white">
               <dl className="text-sm divide-y">
-                <Row k="법인명" v="에이원스마트부동산중개법인" />
-                <Row k="대표자" v="(대표자명)" />
-                <Row k="사업자등록번호" v="(등록번호)" />
-                <Row k="중개사무소 등록번호" v="(등록번호)" />
-                <Row k="주소" v="(주소)" />
-                <Row k="대표 전화" v="(연락처)" />
+                <Row k="법인명" v="에이원스마트부동산중개법인 주식회사" />
+                <Row k="대표자" v="강창구" />
+                <Row k="사업자등록번호" v="845-86-00635" />
+                <Row k="법인등록번호" v="110111-3670290" />
+                <Row k="개업일" v="2017년 03월 09일" />
+                <Row k="업태 / 종목" v="부동산업 / 부동산관리, 부동산 중개" />
+                <Row
+                  k="본점 소재지"
+                  v="서울특별시 강서구 강서로56길 44, 201호 (등촌동, 엘크루 발산)"
+                />
+                <Row k="대표 전화" v="(추후 안내)" />
+                <Row k="중개사무소 등록번호" v="(추후 안내)" />
               </dl>
               <p className="mt-4 text-xs text-neutral-400 italic">
-                ※ 사업자 정보 상세는 별도 안내 예정입니다.
+                ※ 대표 전화 및 중개사무소 등록번호는 추후 안내 예정입니다.
               </p>
             </div>
 

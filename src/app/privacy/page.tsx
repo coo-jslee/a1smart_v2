@@ -30,7 +30,8 @@ export default function PrivacyPage() {
                 1. 개인정보의 수집 항목 및 목적
               </h2>
               <p>
-                에이원스마트부동산중개법인은 다음의 개인정보를 수집·이용합니다.
+                에이원스마트부동산중개법인 주식회사(이하 “회사”, 사업자등록번호
+                845-86-00635)는 다음의 개인정보를 수집·이용합니다.
               </p>
               <ul className="list-disc list-inside mt-2 space-y-1 text-neutral-600">
                 <li>

@@ -45,7 +45,7 @@ export default function ContactPage() {
                   <Phone className="h-4 w-4 text-blue-900 mt-0.5 flex-shrink-0" />
                   <div>
                     <div className="text-xs text-neutral-500">전화</div>
-                    <div className="text-neutral-800">(전화번호 안내 예정)</div>
+                    <div className="text-neutral-800">(추후 안내)</div>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
@@ -54,14 +54,23 @@ export default function ContactPage() {
                     <div className="text-xs text-neutral-500">이메일</div>
                     <div className="text-neutral-800">
                       contact@aonesmart.biz
+                      <div className="text-xs text-neutral-400 mt-0.5">
+                        (도메인 연결 후 안내)
+                      </div>
                     </div>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <MapPin className="h-4 w-4 text-blue-900 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="text-xs text-neutral-500">주소</div>
-                    <div className="text-neutral-800">(사무실 주소 안내 예정)</div>
+                    <div className="text-xs text-neutral-500">본점 소재지</div>
+                    <div className="text-neutral-800 leading-relaxed">
+                      서울특별시 강서구
+                      <br />
+                      강서로56길 44, 201호
+                      <br />
+                      (등촌동, 엘크루 발산)
+                    </div>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
