@@ -66,28 +66,9 @@ export default async function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-b from-transparent to-[#0B1F4D] pointer-events-none" />
 
         {/* 콘텐츠 — 가운데 정렬, 네비 바로 아래부터 */}
-        <div className="relative w-full max-w-3xl mx-auto px-6 pt-12 pb-20 md:pt-16 md:pb-24 flex flex-col items-center text-center">
-          {/* 작은 라벨 */}
-          <div className="flex items-center gap-2.5 mb-5">
-            <span className="h-px w-8 bg-cyan-300/80" />
-            <span className="text-cyan-200 text-xs md:text-sm font-semibold tracking-[0.22em] uppercase">
-              Smart Real Estate
-            </span>
-            <span className="h-px w-8 bg-cyan-300/80" />
-          </div>
-
-          {/* 한글 거대 타이포 */}
-          <h1 className="font-bold text-white leading-[1.12] tracking-tight">
-            <span className="block text-4xl sm:text-6xl md:text-7xl">
-              중개를 넘어,
-            </span>
-            <span className="block text-4xl sm:text-6xl md:text-7xl mt-1 bg-gradient-to-r from-cyan-200 via-sky-100 to-white bg-clip-text text-transparent">
-              부동산 의사결정
-            </span>
-          </h1>
-
-          {/* AI 회로 배너 — 우주 배경과 톤이 같아 자연스럽게 어울림 */}
-          <div className="relative mt-8 w-full aspect-[2368/448] max-h-[170px] md:max-h-[200px] rounded-xl overflow-hidden ring-1 ring-cyan-300/20 shadow-2xl shadow-blue-950/60">
+        <div className="relative w-full max-w-3xl mx-auto px-6 pt-10 pb-20 md:pt-12 md:pb-24 flex flex-col items-center text-center">
+          {/* AI 회로 배너 — 맨 위 */}
+          <div className="relative w-full aspect-[2368/448] max-h-[170px] md:max-h-[200px] rounded-xl overflow-hidden ring-1 ring-cyan-300/20 shadow-2xl shadow-blue-950/60">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/hero-ai.png"
@@ -96,8 +77,27 @@ export default async function Home() {
             />
           </div>
 
+          {/* 작은 라벨 */}
+          <div className="flex items-center gap-2.5 mt-8 mb-5">
+            <span className="h-px w-8 bg-cyan-300/80" />
+            <span className="text-cyan-200 text-xs md:text-sm font-semibold tracking-[0.22em] uppercase">
+              Smart Real Estate
+            </span>
+            <span className="h-px w-8 bg-cyan-300/80" />
+          </div>
+
+          {/* 한글 거대 타이포 */}
+          <h1 className="font-bold text-white leading-[1.15] tracking-tight">
+            <span className="block text-3xl sm:text-5xl md:text-6xl">
+              중개를 넘어
+            </span>
+            <span className="block text-3xl sm:text-5xl md:text-6xl mt-1.5 bg-gradient-to-r from-cyan-200 via-sky-100 to-white bg-clip-text text-transparent">
+              부동산 의사결정 솔루션 제공
+            </span>
+          </h1>
+
           {/* 한글 본문 */}
-          <p className="mt-7 text-cyan-200 text-xs md:text-sm font-semibold tracking-[0.15em] uppercase">
+          <p className="mt-8 text-cyan-200 text-xs md:text-sm font-semibold tracking-[0.15em] uppercase">
             부동산 의사결정 파트너
           </p>
           <p className="mt-2.5 max-w-2xl text-base md:text-lg text-blue-50/90 leading-relaxed">
@@ -135,16 +135,7 @@ export default async function Home() {
 
       {/* 강점 3분할 — 다크 톤 (다크 Hero 다음에 자연스럽게) */}
       <section className="border-b border-white/10 relative">
-        <div className="max-w-6xl mx-auto px-6 py-20">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 text-xs font-medium mb-3">
-              에이원스마트가 다른 이유
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
-              중개를 넘어,
-              <span className="text-yellow-300"> 부동산 의사결정의 모든 답</span>
-            </h2>
-          </div>
+        <div className="max-w-6xl mx-auto px-6 py-16">
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
