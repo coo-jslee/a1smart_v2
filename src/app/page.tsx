@@ -66,7 +66,7 @@ export default async function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-b from-transparent to-[#0B1F4D] pointer-events-none" />
 
         {/* 콘텐츠 — 가운데 정렬, 네비 바로 아래부터 */}
-        <div className="relative w-full max-w-3xl mx-auto px-6 pt-10 pb-20 md:pt-12 md:pb-24 flex flex-col items-center text-center">
+        <div className="relative w-full max-w-3xl mx-auto px-6 pt-8 pb-10 md:pt-10 md:pb-12 flex flex-col items-center text-center">
           {/* AI 회로 배너 — 맨 위 */}
           <div className="relative w-full aspect-[2368/448] max-h-[170px] md:max-h-[200px] rounded-xl overflow-hidden ring-1 ring-cyan-300/20 shadow-2xl shadow-blue-950/60">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -135,7 +135,7 @@ export default async function Home() {
 
       {/* 강점 3분할 — 다크 톤 (다크 Hero 다음에 자연스럽게) */}
       <section className="border-b border-white/10 relative">
-        <div className="max-w-6xl mx-auto px-6 py-16">
+        <div className="max-w-6xl mx-auto px-6 py-8">
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
