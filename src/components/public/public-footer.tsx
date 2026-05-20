@@ -74,6 +74,11 @@ export function PublicFooter() {
               </Link>
             </li>
             <li>
+              <Link href="/experts" className="hover:text-yellow-300">
+                전문가 소개
+              </Link>
+            </li>
+            <li>
               <Link href="/about" className="hover:text-yellow-300">
                 회사 소개
               </Link>

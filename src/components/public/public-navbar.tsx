@@ -72,6 +72,12 @@ export async function PublicNavbar() {
             매도 의뢰
           </Link>
           <Link
+            href="/experts"
+            className="text-blue-100/80 hover:text-yellow-300 transition-colors"
+          >
+            전문가 소개
+          </Link>
+          <Link
             href="/about"
             className="text-blue-100/80 hover:text-yellow-300 transition-colors"
           >
