@@ -97,13 +97,13 @@ export default async function Home() {
           </h1>
 
           {/* 한글 본문 */}
-          <p className="mt-8 text-cyan-200 text-xs md:text-sm font-semibold tracking-[0.15em] uppercase">
+          <p className="mt-8 text-cyan-200 text-lg md:text-2xl font-bold tracking-[0.1em]">
             부동산 의사결정 파트너
           </p>
-          <p className="mt-2.5 max-w-2xl text-base md:text-lg text-blue-50/90 leading-relaxed">
-            매물 찾기는 시작일 뿐입니다. 공인회계사·세무사·변호사 전문가
-            집단과 AI가 — 매물 발굴부터 취득·절세·승계 전략까지 한 곳에서
-            설계합니다.
+          <p className="mt-3 max-w-2xl text-base md:text-lg text-white leading-relaxed">
+            매물 찾기는 시작일 뿐입니다. 공인회계사·세무사·변호사 전문가 집단과 AI가
+            <br />
+            매물 발굴부터 취득·절세·승계 전략까지 한 곳에서 설계합니다.
           </p>
 
           {/* CTA */}
