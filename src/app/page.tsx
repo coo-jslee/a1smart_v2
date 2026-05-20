@@ -55,23 +55,23 @@ export default async function Home() {
     <div className="dark flex flex-col flex-1 min-h-screen bg-[#0B1F4D] text-white">
       <PublicNavbar />
 
-      {/* Hero — 노션 톤 (AI 회로 + 집 배너 이미지 — 원본 비율 4.5:1 그대로) */}
-      <section className="relative overflow-hidden border-b border-blue-950/40 bg-[#050F2C]">
-        {/* 배경 다크 톤 */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#050F2C] via-[#0B1F4D] to-[#1A3D7A]" />
-        {/* 코너 글로우 */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(34,211,238,0.15),transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(26,61,122,0.5),transparent_55%)]" />
+      {/* Hero — 고급 번트 오렌지 톤 */}
+      <section className="relative overflow-hidden border-b border-orange-950/50 bg-[#1A0A02]">
+        {/* 배경 — 깊은 번트 오렌지 그라데이션 */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2A1006] via-[#7C2D12] to-[#9A3412]" />
+        {/* 코너 글로우 — 따뜻한 앰버 */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(251,191,36,0.20),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(120,53,18,0.6),transparent_55%)]" />
 
         {/* 콘텐츠 영역 — AI 회로 배너를 풀폭으로 표시 (원본 비율 유지) */}
         <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-12 md:pt-20 md:pb-16">
-          {/* AI 회로 배너 — 원본 4.5:1 비율 그대로, contain */}
-          <div className="relative w-full aspect-[2368/448] max-h-[280px] md:max-h-[340px] mx-auto">
+          {/* AI 회로 배너 — 둥근 카드 프레임으로 감싸 주황 배경과 자연스럽게 분리 */}
+          <div className="relative w-full aspect-[2368/448] max-h-[280px] md:max-h-[340px] mx-auto rounded-2xl overflow-hidden ring-1 ring-amber-200/25 shadow-2xl shadow-black/50">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/hero-ai.png"
               alt="AI 활용 더 똑똑한 부동산중개법인 — 에이원스마트부동산중개법인"
-              className="w-full h-full object-contain"
+              className="w-full h-full object-cover"
             />
           </div>
 
@@ -80,11 +80,11 @@ export default async function Home() {
             <h1 className="text-3xl md:text-5xl font-bold leading-[1.25] tracking-tight text-white">
               매물 찾기는 시작일 뿐
               <br />
-              <span className="bg-gradient-to-r from-cyan-300 via-cyan-200 to-white bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-amber-200 via-amber-100 to-white bg-clip-text text-transparent">
                 취득·절세·승계까지 설계합니다
               </span>
             </h1>
-            <p className="mt-5 text-base md:text-lg text-blue-100/90 leading-relaxed">
+            <p className="mt-5 text-base md:text-lg text-orange-50/90 leading-relaxed">
               공인회계사·세무사·변호사 전문가 집단이 AI 매물 분석과 함께 —
               부동산 취득의 세금·법률 전략까지 한 곳에서 책임집니다.
             </p>
@@ -92,7 +92,7 @@ export default async function Home() {
               <Link href="/properties">
                 <Button
                   size="lg"
-                  className="bg-cyan-400 text-blue-950 hover:bg-cyan-300 font-semibold shadow-lg shadow-cyan-500/30"
+                  className="bg-amber-300 text-orange-950 hover:bg-amber-200 font-semibold shadow-lg shadow-amber-900/40"
                 >
                   공개 매물 보기
                   <ArrowRight className="h-4 w-4 ml-1" />
@@ -102,20 +102,20 @@ export default async function Home() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10 hover:text-white bg-transparent"
+                  className="border-white/40 text-white hover:bg-white/10 hover:text-white bg-transparent"
                 >
                   무료 회원가입
                 </Button>
               </Link>
             </div>
-            <p className="mt-4 text-xs text-blue-200/60">
+            <p className="mt-4 text-xs text-orange-100/60">
               회원가입 시 전문가 분석보고서(시세·권리·세무)를 무료로 받아보실 수 있습니다
             </p>
           </div>
         </div>
 
-        {/* 하단 페이드 (다음 섹션과 자연스럽게 연결) */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-[#0B1F4D] pointer-events-none" />
+        {/* 하단 페이드 (주황 → 네이비 강점 섹션으로 자연스럽게 전환) */}
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent to-[#0B1F4D] pointer-events-none" />
       </section>
 
       {/* 강점 3분할 — 다크 톤 (다크 Hero 다음에 자연스럽게) */}
