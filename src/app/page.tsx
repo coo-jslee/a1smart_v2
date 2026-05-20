@@ -8,7 +8,7 @@
  *  - 푸터: PublicFooter
  */
 import Link from "next/link";
-import { ArrowRight, Scale, BrainCircuit, Landmark, ChevronDown } from "lucide-react";
+import { ArrowRight, Scale, BrainCircuit, Landmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { PublicNavbar } from "@/components/public/public-navbar";
@@ -56,37 +56,38 @@ export default async function Home() {
     <div className="dark flex flex-col flex-1 min-h-screen bg-[#0B1F4D] text-white">
       <PublicNavbar />
 
-      {/* Hero — 우주 배경 + 한글 거대 타이포 + AI 회로 배너 */}
-      <section className="relative overflow-hidden bg-[#06112B] min-h-[92vh] flex items-center">
-        {/* 배경 — 짙은 네이비 그라데이션 (별 가시성 위해 살짝 밝힘) */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#06112B] via-[#0A1F44] to-[#0B1F4D]" />
+      {/* Hero — 우주 배경 + 한글 거대 타이포 + AI 회로 배너 (센터 정렬) */}
+      <section className="relative overflow-hidden bg-[#13316B]">
+        {/* 배경 — 중간 코발트 블루 그라데이션 (밝게) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#13316B] via-[#1A4490] to-[#1C4B9E]" />
         {/* 우주 — 별·은하수·성운 */}
         <HeroStarfield />
         {/* 하단 비네팅 (다음 섹션과 자연 연결) */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#0B1F4D] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-b from-transparent to-[#0B1F4D] pointer-events-none" />
 
-        {/* 콘텐츠 — 좌측 정렬, 미니멀 */}
-        <div className="relative w-full max-w-6xl mx-auto px-6 py-20 md:py-24">
+        {/* 콘텐츠 — 가운데 정렬, 네비 바로 아래부터 */}
+        <div className="relative w-full max-w-3xl mx-auto px-6 pt-12 pb-20 md:pt-16 md:pb-24 flex flex-col items-center text-center">
           {/* 작은 라벨 */}
-          <div className="flex items-center gap-2.5 mb-6">
-            <span className="h-px w-8 bg-cyan-400/70" />
-            <span className="text-cyan-300/90 text-xs md:text-sm font-semibold tracking-[0.22em] uppercase">
+          <div className="flex items-center gap-2.5 mb-5">
+            <span className="h-px w-8 bg-cyan-300/80" />
+            <span className="text-cyan-200 text-xs md:text-sm font-semibold tracking-[0.22em] uppercase">
               Smart Real Estate
             </span>
+            <span className="h-px w-8 bg-cyan-300/80" />
           </div>
 
           {/* 한글 거대 타이포 */}
-          <h1 className="font-bold text-white leading-[1.08] tracking-tight">
+          <h1 className="font-bold text-white leading-[1.12] tracking-tight">
             <span className="block text-4xl sm:text-6xl md:text-7xl">
               중개를 넘어,
             </span>
-            <span className="block text-4xl sm:text-6xl md:text-7xl mt-1 bg-gradient-to-r from-cyan-300 via-sky-200 to-white bg-clip-text text-transparent">
+            <span className="block text-4xl sm:text-6xl md:text-7xl mt-1 bg-gradient-to-r from-cyan-200 via-sky-100 to-white bg-clip-text text-transparent">
               부동산 의사결정
             </span>
           </h1>
 
           {/* AI 회로 배너 — 우주 배경과 톤이 같아 자연스럽게 어울림 */}
-          <div className="relative mt-9 w-full max-w-3xl aspect-[2368/448] max-h-[180px] md:max-h-[210px] rounded-xl overflow-hidden ring-1 ring-cyan-300/15 shadow-2xl shadow-black/50">
+          <div className="relative mt-8 w-full aspect-[2368/448] max-h-[170px] md:max-h-[200px] rounded-xl overflow-hidden ring-1 ring-cyan-300/20 shadow-2xl shadow-blue-950/60">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/hero-ai.png"
@@ -96,23 +97,21 @@ export default async function Home() {
           </div>
 
           {/* 한글 본문 */}
-          <div className="mt-8 max-w-2xl">
-            <p className="text-cyan-300/80 text-xs md:text-sm font-semibold tracking-[0.15em] uppercase mb-2.5">
-              부동산 의사결정 파트너
-            </p>
-            <p className="text-base md:text-lg text-blue-100/85 leading-relaxed">
-              매물 찾기는 시작일 뿐입니다. 공인회계사·세무사·변호사 전문가
-              집단과 AI가 — 매물 발굴부터 취득·절세·승계 전략까지 한 곳에서
-              설계합니다.
-            </p>
-          </div>
+          <p className="mt-7 text-cyan-200 text-xs md:text-sm font-semibold tracking-[0.15em] uppercase">
+            부동산 의사결정 파트너
+          </p>
+          <p className="mt-2.5 max-w-2xl text-base md:text-lg text-blue-50/90 leading-relaxed">
+            매물 찾기는 시작일 뿐입니다. 공인회계사·세무사·변호사 전문가
+            집단과 AI가 — 매물 발굴부터 취득·절세·승계 전략까지 한 곳에서
+            설계합니다.
+          </p>
 
           {/* CTA */}
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3 justify-center">
             <Link href="/properties">
               <Button
                 size="lg"
-                className="bg-cyan-400 text-blue-950 hover:bg-cyan-300 font-semibold shadow-lg shadow-cyan-500/25"
+                className="bg-cyan-400 text-blue-950 hover:bg-cyan-300 font-semibold shadow-lg shadow-cyan-500/30"
               >
                 공개 매물 보기
                 <ArrowRight className="h-4 w-4 ml-1" />
@@ -122,21 +121,15 @@ export default async function Home() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white/30 text-white hover:bg-white/10 hover:text-white bg-transparent"
+                className="border-white/40 text-white hover:bg-white/10 hover:text-white bg-transparent"
               >
                 무료 회원가입
               </Button>
             </Link>
           </div>
-          <p className="mt-4 text-xs text-blue-300/50">
+          <p className="mt-4 text-xs text-blue-100/60">
             회원가입 시 전문가 분석보고서(시세·권리·세무)를 무료로 받아보실 수 있습니다
           </p>
-        </div>
-
-        {/* 스크롤 인디케이터 */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-blue-300/40">
-          <span className="text-[10px] tracking-[0.25em] uppercase">Scroll</span>
-          <ChevronDown className="h-4 w-4 animate-bounce" />
         </div>
       </section>
 

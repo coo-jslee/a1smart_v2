@@ -42,14 +42,14 @@ export function HeroStarfield() {
           <stop offset="100%" stopColor="#1A3D7A" stopOpacity="0" />
         </linearGradient>
         {/* 좌상단 푸른 성운 글로우 */}
-        <radialGradient id="nebula-a" cx="22%" cy="18%" r="40%">
-          <stop offset="0%" stopColor="#3B6FB5" stopOpacity="0.30" />
-          <stop offset="100%" stopColor="#0B1F4D" stopOpacity="0" />
+        <radialGradient id="nebula-a" cx="22%" cy="18%" r="44%">
+          <stop offset="0%" stopColor="#5B8FD5" stopOpacity="0.40" />
+          <stop offset="100%" stopColor="#1A4490" stopOpacity="0" />
         </radialGradient>
         {/* 우하단 청록 성운 글로우 */}
-        <radialGradient id="nebula-b" cx="82%" cy="80%" r="44%">
-          <stop offset="0%" stopColor="#22D3EE" stopOpacity="0.12" />
-          <stop offset="100%" stopColor="#0B1F4D" stopOpacity="0" />
+        <radialGradient id="nebula-b" cx="82%" cy="80%" r="48%">
+          <stop offset="0%" stopColor="#22D3EE" stopOpacity="0.20" />
+          <stop offset="100%" stopColor="#1A4490" stopOpacity="0" />
         </radialGradient>
       </defs>
 
