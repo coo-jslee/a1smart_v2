@@ -8,7 +8,7 @@
  *  - 푸터: PublicFooter
  */
 import Link from "next/link";
-import { ArrowRight, FileText, Shield, Sparkles } from "lucide-react";
+import { ArrowRight, Scale, BrainCircuit, Landmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { PublicNavbar } from "@/components/public/public-navbar";
@@ -77,16 +77,16 @@ export default async function Home() {
 
           {/* 텍스트 + CTA — 배너 아래 */}
           <div className="relative mt-8 md:mt-10 text-center max-w-3xl mx-auto">
-            <h1 className="text-3xl md:text-5xl font-bold leading-[1.2] tracking-tight text-white">
-              30년 경력 전문가가 설계한
+            <h1 className="text-3xl md:text-5xl font-bold leading-[1.25] tracking-tight text-white">
+              매물 찾기는 시작일 뿐
               <br />
               <span className="bg-gradient-to-r from-cyan-300 via-cyan-200 to-white bg-clip-text text-transparent">
-                정확한 부동산 분석
+                취득·절세·승계까지 설계합니다
               </span>
             </h1>
             <p className="mt-5 text-base md:text-lg text-blue-100/90 leading-relaxed">
-              공부(등기·토지·건축) 자동 분석, 국토부 실거래가 기반 합의시세,
-              권리하자 진단까지 — 한 곳에서 완결되는 부동산 AI 자동화.
+              공인회계사·세무사·변호사 전문가 집단이 AI 매물 분석과 함께 —
+              부동산 취득의 세금·법률 전략까지 한 곳에서 책임집니다.
             </p>
             <div className="mt-8 flex flex-wrap gap-3 justify-center">
               <Link href="/properties">
@@ -104,12 +104,12 @@ export default async function Home() {
                   variant="outline"
                   className="border-white/30 text-white hover:bg-white/10 hover:text-white bg-transparent"
                 >
-                  회원가입
+                  무료 회원가입
                 </Button>
               </Link>
             </div>
             <p className="mt-4 text-xs text-blue-200/60">
-              ※ 매물 상세·분석보고서 다운로드는 회원 전용입니다
+              회원가입 시 전문가 분석보고서(시세·권리·세무)를 무료로 받아보실 수 있습니다
             </p>
           </div>
         </div>
@@ -123,29 +123,29 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto px-6 py-20">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 text-xs font-medium mb-3">
-              핵심 가치
+              에이원스마트가 다른 이유
             </div>
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
-              사람이 빠뜨리는 정보까지
-              <span className="text-yellow-300"> AI가 정확히</span>
+              중개를 넘어,
+              <span className="text-yellow-300"> 부동산 의사결정의 모든 답</span>
             </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                icon: Sparkles,
-                title: "7단계 자동 분석",
-                desc: "공부 PDF 업로드 → OCR + Claude LLM → 매물 자동 등록까지 1분.",
+                icon: Scale,
+                title: "전문가 집단",
+                desc: "공인회계사·세무사·변호사가 직접 분석합니다. 단순 중개사가 아닌 전문가 그룹의 종합 자문.",
               },
               {
-                icon: FileText,
-                title: "합의 시세 산출",
-                desc: "국토부 실거래 + 6개 평가방법 + 권리하자 디스카운트로 정확한 가격.",
+                icon: BrainCircuit,
+                title: "AI 매물 매칭",
+                desc: "최신 인공지능이 조건에 맞는 매물을 서칭·추천·매핑. 사람이 놓치는 기회까지 정밀 발굴.",
               },
               {
-                icon: Shield,
-                title: "권리하자 진단",
-                desc: "근저당·가압류·압류·경매 자동 분석 → 위험등급(안전·주의·위험) 분류.",
+                icon: Landmark,
+                title: "취득·절세 설계",
+                desc: "법인세·소득세·상속세·법인전환까지 — 부동산 취득의 모든 세무·법률 이슈를 다각도로 분석.",
               },
             ].map((f) => (
               <div
@@ -179,7 +179,7 @@ export default async function Home() {
                 최신 공개 매물
               </h2>
               <p className="mt-1 text-sm text-blue-200/70">
-                AI 합의시세 + 권리분석이 완료된 매물입니다
+                AI 합의시세 + 권리분석 + 세무 검토까지 완료된 매물입니다
               </p>
             </div>
             <Link

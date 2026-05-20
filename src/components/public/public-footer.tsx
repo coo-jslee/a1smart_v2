@@ -12,9 +12,9 @@ export function PublicFooter() {
             에이원스마트부동산중개법인 주식회사
           </div>
           <p className="mt-2 text-xs text-blue-200/70 leading-relaxed">
-            30년 경력 부동산·금융 전문가가 설계한 AI 자동화 플랫폼.
+            공인회계사·세무사·변호사 전문가 집단과 AI가 함께하는
             <br />
-            공부 자동분석, 합의시세 산정, 권리하자 진단을 한 곳에서.
+            부동산 의사결정 파트너. 매물 발굴·권리분석·세무 전략을 한 곳에서.
           </p>
           <dl className="mt-4 text-xs text-blue-200/70 space-y-1">
             <div className="flex gap-2">
