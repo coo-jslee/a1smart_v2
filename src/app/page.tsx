@@ -56,38 +56,48 @@ export default async function Home() {
     <div className="dark flex flex-col flex-1 min-h-screen bg-[#0B1F4D] text-white">
       <PublicNavbar />
 
-      {/* Hero — 우주 배경 + 거대 타이포 (mateplus.net 벤치마킹) */}
-      <section className="relative overflow-hidden bg-[#040A1A] min-h-[88vh] flex items-center">
-        {/* 배경 — 짙은 네이비 그라데이션 */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#040A1A] via-[#081633] to-[#0B1F4D]" />
+      {/* Hero — 우주 배경 + 한글 거대 타이포 + AI 회로 배너 */}
+      <section className="relative overflow-hidden bg-[#06112B] min-h-[92vh] flex items-center">
+        {/* 배경 — 짙은 네이비 그라데이션 (별 가시성 위해 살짝 밝힘) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#06112B] via-[#0A1F44] to-[#0B1F4D]" />
         {/* 우주 — 별·은하수·성운 */}
         <HeroStarfield />
         {/* 하단 비네팅 (다음 섹션과 자연 연결) */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#0B1F4D] pointer-events-none" />
 
         {/* 콘텐츠 — 좌측 정렬, 미니멀 */}
-        <div className="relative w-full max-w-6xl mx-auto px-6 py-24 md:py-28">
+        <div className="relative w-full max-w-6xl mx-auto px-6 py-20 md:py-24">
           {/* 작은 라벨 */}
-          <div className="flex items-center gap-2.5 mb-7">
+          <div className="flex items-center gap-2.5 mb-6">
             <span className="h-px w-8 bg-cyan-400/70" />
-            <span className="text-cyan-300/90 text-xs md:text-sm font-semibold tracking-[0.2em] uppercase">
-              AI × 전문가 그룹
+            <span className="text-cyan-300/90 text-xs md:text-sm font-semibold tracking-[0.22em] uppercase">
+              Smart Real Estate
             </span>
           </div>
 
-          {/* 거대 영문 타이포 */}
-          <h1 className="font-bold text-white leading-[0.95] tracking-tight">
-            <span className="block text-5xl sm:text-7xl md:text-8xl lg:text-[8.5rem]">
-              BEYOND
+          {/* 한글 거대 타이포 */}
+          <h1 className="font-bold text-white leading-[1.08] tracking-tight">
+            <span className="block text-4xl sm:text-6xl md:text-7xl">
+              중개를 넘어,
             </span>
-            <span className="block text-5xl sm:text-7xl md:text-8xl lg:text-[8.5rem] bg-gradient-to-r from-cyan-300 via-sky-200 to-white bg-clip-text text-transparent">
-              BROKERAGE
+            <span className="block text-4xl sm:text-6xl md:text-7xl mt-1 bg-gradient-to-r from-cyan-300 via-sky-200 to-white bg-clip-text text-transparent">
+              부동산 의사결정
             </span>
           </h1>
 
+          {/* AI 회로 배너 — 우주 배경과 톤이 같아 자연스럽게 어울림 */}
+          <div className="relative mt-9 w-full max-w-3xl aspect-[2368/448] max-h-[180px] md:max-h-[210px] rounded-xl overflow-hidden ring-1 ring-cyan-300/15 shadow-2xl shadow-black/50">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero-ai.png"
+              alt="AI 활용 더 똑똑한 부동산중개법인 — 에이원스마트부동산중개법인"
+              className="w-full h-full object-cover"
+            />
+          </div>
+
           {/* 한글 본문 */}
-          <div className="mt-10 max-w-2xl">
-            <p className="text-cyan-300/80 text-xs md:text-sm font-semibold tracking-[0.15em] uppercase mb-3">
+          <div className="mt-8 max-w-2xl">
+            <p className="text-cyan-300/80 text-xs md:text-sm font-semibold tracking-[0.15em] uppercase mb-2.5">
               부동산 의사결정 파트너
             </p>
             <p className="text-base md:text-lg text-blue-100/85 leading-relaxed">
@@ -98,7 +108,7 @@ export default async function Home() {
           </div>
 
           {/* CTA */}
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/properties">
               <Button
                 size="lg"
@@ -124,7 +134,7 @@ export default async function Home() {
         </div>
 
         {/* 스크롤 인디케이터 */}
-        <div className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-blue-300/40">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-blue-300/40">
           <span className="text-[10px] tracking-[0.25em] uppercase">Scroll</span>
           <ChevronDown className="h-4 w-4 animate-bounce" />
         </div>
